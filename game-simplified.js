@@ -2065,6 +2065,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add some keyboard shortcuts for better gameplay
 document.addEventListener('keydown', (event) => {
+    // ESC key works globally to exit to main menu
+    if (event.key === 'Escape') {
+        showStartScreen();
+        return;
+    }
+    
+    // Other shortcuts only work during gameplay
     if (!game || game.gameState !== 'playing') return;
     
     switch (event.key) {
@@ -2086,9 +2093,6 @@ document.addEventListener('keydown', (event) => {
             if (submitBtn && !submitBtn.disabled) {
                 submitForm();
             }
-            break;
-        case 'Escape':
-            showStartScreen();
             break;
     }
 });

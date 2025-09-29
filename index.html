@@ -200,6 +200,10 @@
                 </div>
                 <div class="ui-right">
                     <div class="forms-completed">Forms: <span id="completed">0</span></div>
+                    <div class="game-controls">
+                        <button class="exit-btn" onclick="exitToMenu()" title="Exit to Main Menu (ESC)">🚪 Exit</button>
+                        <button class="restart-btn" onclick="restartCurrentGame()" title="Restart Current Game">🔄 Restart</button>
+                    </div>
                 </div>
             </div>
 
@@ -580,6 +584,36 @@
             
             function checkProfileReady() {
                 // Called when name is typed
+            }
+
+            // Game control functions for exit and restart buttons
+            function exitToMenu() {
+                console.log('🚪 Exit to menu clicked');
+                if (game) {
+                    game.showStartScreen();
+                } else {
+                    // Fallback if game object doesn't exist
+                    const screens = ['profile-screen', 'rankings-screen', 'game-screen', 'game-over-screen'];
+                    screens.forEach(screenId => {
+                        const screen = document.getElementById(screenId);
+                        if (screen) {
+                            screen.style.display = screenId === 'start-screen' ? 'flex' : 'none';
+                        }
+                    });
+                    
+                    const startScreen = document.getElementById('start-screen');
+                    if (startScreen) startScreen.style.display = 'flex';
+                }
+            }
+
+            function restartCurrentGame() {
+                console.log('🔄 Restart game clicked');
+                if (game) {
+                    game.restartGame();
+                } else {
+                    // Fallback if game object doesn't exist
+                    location.reload();
+                }
             }
             
             // Game state

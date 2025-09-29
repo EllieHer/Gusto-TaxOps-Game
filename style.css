@@ -651,6 +651,41 @@ body {
     50% { transform: scale(1.1); }
 }
 
+.game-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.exit-btn, .restart-btn {
+    background: linear-gradient(45deg, #FF5722, #E53935);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.9em;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(255,87,34,0.3);
+    font-weight: bold;
+}
+
+.exit-btn:hover, .restart-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255,87,34,0.5);
+    background: linear-gradient(45deg, #F4511E, #D32F2F);
+}
+
+.restart-btn {
+    background: linear-gradient(45deg, #4CAF50, #388E3C);
+    box-shadow: 0 2px 8px rgba(76,175,80,0.3);
+}
+
+.restart-btn:hover {
+    background: linear-gradient(45deg, #43A047, #2E7D32);
+    box-shadow: 0 4px 12px rgba(76,175,80,0.5);
+}
+
 /* Office Layout */
 .office {
     position: relative;
