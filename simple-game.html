@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gusto Tax Pro Training - Simple Version</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .simple-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .screen.active {
+            display: block;
+        }
+        .form-container {
+            background: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .form-field {
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        .form-field label {
+            font-weight: bold;
+            flex: 1;
+        }
+        .form-field input, .form-field select {
+            width: 200px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .avatar-option {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            background: white;
+        }
+        .avatar-option.selected {
+            border-color: #4CAF50;
+            background: #e8f5e8;
+        }
+        .debug-info {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="simple-container">
+        <!-- Profile Screen -->
+        <div id="profile-screen" class="screen active">
+            <h1>🏢 Create Your Tax Pro Profile</h1>
+            <p>Choose your avatar and join the Red Rock Rankings!</p>
+            
+            <div>
+                <label for="player-name">Your Name:</label>
+                <input type="text" id="player-name" placeholder="Enter your name" maxlength="20">
+            </div>
+            
+            <h3>Choose Your Avatar:</h3>
+            <div>
+                <div class="avatar-option" data-avatar="beach" onclick="selectAvatar('beach', this)">
+                    🏖️ Beach Piggy
+                </div>
+                <div class="avatar-option" data-avatar="penny" onclick="selectAvatar('penny', this)">
+                    💰 Penny Piggy
+                </div>
+                <div class="avatar-option" data-avatar="business" onclick="selectAvatar('business', this)">
+                    💼 Business Piggy
+                </div>
+                <div class="avatar-option" data-avatar="party" onclick="selectAvatar('party', this)">
+                    🎉 Party Piggy
+                </div>
+            </div>
+            
+            <button class="btn" id="create-profile-btn" onclick="createProfile()" disabled>Create Profile</button>
+            
+            <div class="debug-info">
+                <div>Debug: <span id="debug-status">Ready</span></div>
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen">
+            <h1>📋 Gusto Tax Pro Training</h1>
+            <p>Master IRS 941 and State Tax Forms!</p>
+            
+            <div id="user-info">
+                <h3>Welcome, <span id="user-name">Player</span>!</h3>
+                <p>Avatar: <span id="user-avatar">None</span></p>
+            </div>
+            
+            <button class="btn" onclick="startGame()">🎮 Start Game</button>
+            <button class="btn" onclick="goToProfile()">Change Profile</button>
+            
+            <div class="debug-info">
+                <div>Game Object: <span id="game-status">Checking...</span></div>
+                <div>Profile: <span id="profile-status">Checking...</span></div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <h2>🎮 Game Screen</h2>
+            <div class="game-ui">
+                <div>Score: <span id="score">0</span></div>
+                <div>Level: <span id="level">1</span></div>
+                <div>Time: <span id="timer">90</span>s</div>
+            </div>
+            
+            <div class="form-container">
+                <h3>Tax Form</h3>
+                <div id="form-content">
+                    <div class="form-field">
+                        <label>EIN:</label>
+                        <input type="text" id="field-ein" placeholder="94-1234567">
+                    </div>
+                    <div class="form-field">
+                        <label>Total Wages:</label>
+                        <input type="text" id="field-wages" placeholder="125000.00">
+                    </div>
+                    <div class="form-field">
+                        <label>Federal Tax:</label>
+                        <input type="text" id="field-federal" placeholder="18750.00">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="fillForm()">Fill Form</button>
+            <button class="btn" onclick="submitForm()">Submit Form</button>
+            <button class="btn" onclick="goToStart()">Back to Menu</button>
+        </div>
+    </div>
+
+    <script>
+        // Simple game state
+        let gameState = {
+            playerName: '',
+            avatar: '',
+            score: 0,
+            level: 1,
+            timeLeft: 90,
+            selectedAvatar: null
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Simple game loaded');
+            updateDebugStatus('Game loaded');
+            checkProfileReady();
+            updateGameStatus();
+        });
+
+        // Profile functions
+        function selectAvatar(avatarType, element) {
+            console.log('Avatar selected:', avatarType);
+            
+            // Remove selection from all avatars
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Select this avatar
+            element.classList.add('selected');
+            gameState.selectedAvatar = avatarType;
+            
+            checkProfileReady();
+        }
+
+        function checkProfileReady() {
+            const nameInput = document.getElementById('player-name');
+            const createBtn = document.getElementById('create-profile-btn');
+            
+            if (nameInput && createBtn) {
+                const hasName = nameInput.value.trim().length > 0;
+                const hasAvatar = gameState.selectedAvatar !== null;
+                
+                if (hasName && hasAvatar) {
+                    createBtn.disabled = false;
+                    createBtn.style.background = '#4CAF50';
+                } else {
+                    createBtn.disabled = true;
+                    createBtn.style.background = '#ccc';
+                }
+            }
+        }
+
+        function createProfile() {
+            const nameInput = document.getElementById('player-name');
+            const playerName = nameInput ? nameInput.value.trim() : '';
+            
+            console.log('Creating profile:', { playerName, avatar: gameState.selectedAvatar });
+            
+            if (playerName && gameState.selectedAvatar) {
+                gameState.playerName = playerName;
+                gameState.avatar = gameState.selectedAvatar;
+                
+                // Save to localStorage
+                localStorage.setItem('taxProUser', JSON.stringify({
+                    name: playerName,
+                    avatar: gameState.selectedAvatar,
+                    bestScore: 0
+                }));
+                
+                updateDebugStatus('Profile created successfully');
+                showScreen('start-screen');
+                updateUserInfo();
+            } else {
+                alert('Please enter name and select avatar');
+                updateDebugStatus('Profile creation failed - missing info');
+            }
+        }
+
+        function updateUserInfo() {
+            const userNameEl = document.getElementById('user-name');
+            const userAvatarEl = document.getElementById('user-avatar');
+            
+            if (userNameEl) userNameEl.textContent = gameState.playerName;
+            if (userAvatarEl) userAvatarEl.textContent = gameState.avatar;
+        }
+
+        function goToProfile() {
+            showScreen('profile-screen');
+        }
+
+        function goToStart() {
+            showScreen('start-screen');
+        }
+
+        // Game functions
+        function startGame() {
+            console.log('Starting game...');
+            updateDebugStatus('Starting game...');
+            
+            // Load profile if not loaded
+            const savedProfile = localStorage.getItem('taxProUser');
+            if (savedProfile) {
+                const profile = JSON.parse(savedProfile);
+                gameState.playerName = profile.name;
+                gameState.avatar = profile.avatar;
+            }
+            
+            showScreen('game-screen');
+            updateGameUI();
+            startTimer();
+            updateDebugStatus('Game started');
+        }
+
+        function fillForm() {
+            console.log('Filling form...');
+            updateDebugStatus('Form filled');
+            
+            // Enable form fields
+            const inputs = document.querySelectorAll('#form-content input');
+            inputs.forEach(input => {
+                input.disabled = false;
+                input.style.background = 'white';
+            });
+        }
+
+        function submitForm() {
+            console.log('Submitting form...');
+            gameState.score += 100;
+            gameState.level += 1;
+            
+            updateGameUI();
+            updateDebugStatus('Form submitted - Score: ' + gameState.score);
+            
+            // Show success message
+            alert(`Form submitted! Score: ${gameState.score}, Level: ${gameState.level}`);
+        }
+
+        function startTimer() {
+            const timerEl = document.getElementById('timer');
+            if (!timerEl) return;
+            
+            const timer = setInterval(() => {
+                gameState.timeLeft--;
+                timerEl.textContent = gameState.timeLeft;
+                
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert('Time\'s up! Game over.');
+                    goToStart();
+                }
+            }, 1000);
+        }
+
+        function updateGameUI() {
+            const scoreEl = document.getElementById('score');
+            const levelEl = document.getElementById('level');
+            const timerEl = document.getElementById('timer');
+            
+            if (scoreEl) scoreEl.textContent = gameState.score;
+            if (levelEl) levelEl.textContent = gameState.level;
+            if (timerEl) timerEl.textContent = gameState.timeLeft;
+        }
+
+        function updateGameStatus() {
+            const gameStatusEl = document.getElementById('game-status');
+            const profileStatusEl = document.getElementById('profile-status');
+            
+            if (gameStatusEl) {
+                gameStatusEl.textContent = '✅ Available';
+                gameStatusEl.style.color = '#4CAF50';
+            }
+            
+            if (profileStatusEl) {
+                const savedProfile = localStorage.getItem('taxProUser');
+                if (savedProfile) {
+                    try {
+                        const profile = JSON.parse(savedProfile);
+                        profileStatusEl.textContent = `✅ ${profile.name} (${profile.avatar})`;
+                        profileStatusEl.style.color = '#4CAF50';
+                    } catch (e) {
+                        profileStatusEl.textContent = '❌ Invalid Profile';
+                        profileStatusEl.style.color = '#F44336';
+                    }
+                } else {
+                    profileStatusEl.textContent = '❌ No Profile';
+                    profileStatusEl.style.color = '#F44336';
+                }
+            }
+        }
+
+        function showScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show target screen
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                console.log('Showing screen:', screenId);
+            }
+        }
+
+        function updateDebugStatus(message) {
+            const debugEl = document.getElementById('debug-status');
+            if (debugEl) {
+                debugEl.textContent = message;
+                console.log('Debug:', message);
+            }
+        }
+
+        // Add input listener for name field
+        document.getElementById('player-name').addEventListener('input', checkProfileReady);
+    </script>
+</body>
+</html>

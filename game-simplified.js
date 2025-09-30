@@ -28,7 +28,12 @@ class TaxFilingGame {
             "Professional tax preparation is critical!",
             "Perfect! Ready for tax season!",
             "🍄 Power up your tax skills with every form!",
-            "Speed and accuracy - that's the PANDA way!"
+            "Speed and accuracy - that's the PANDA way!",
+            "Accuracy is key for professional tax preparation!",
+            "Double-check your entries against the PANDA board!",
+            "Perfect! You're mastering tax form completion!",
+            "Keep checking the PANDA board for correct values!",
+            "Excellent work on accurate data entry!"
         ];
         
         this.difficultySettings = this.generateDifficultySettings();
@@ -203,12 +208,17 @@ class TaxFilingGame {
     }
     
     startGame() {
+        // Visual debug update
+        const debugStatus = document.getElementById('debug-status');
+        if (debugStatus) debugStatus.innerHTML = '🎯 Game.startGame() called - Initializing...';
+        
         this.gameState = 'playing';
         this.level = 1;
         this.score = 0;
         this.formsCompleted = 0;
         this.correctForms = 0;
         
+        if (debugStatus) debugStatus.innerHTML = '🎯 Game state reset - Switching screens...';
         
         const startScreen = document.getElementById('start-screen');
         const gameOverScreen = document.getElementById('game-over-screen');
@@ -218,6 +228,8 @@ class TaxFilingGame {
         if (gameOverScreen) gameOverScreen.style.display = 'none';
         if (gameScreen) gameScreen.style.display = 'block';
         
+        if (debugStatus) debugStatus.innerHTML = '🎯 Screens switched - Game screen should be visible!';
+        
         // Make sure required elements exist
         if (!gameScreen) {
             console.error('Game screen not found!');
@@ -226,9 +238,13 @@ class TaxFilingGame {
         
         this.currentForm = null;
         this.formState = 'empty';
+        
+        if (debugStatus) debugStatus.innerHTML = '🎯 Updating UI and generating form...';
         this.updateUI();
         this.generateNewForm();
         this.startTimer();
+        
+        if (debugStatus) debugStatus.innerHTML = '🎯 Form generated! Timer started!';
         
         this.updatePiggyVisibility();
         
@@ -242,7 +258,7 @@ class TaxFilingGame {
             this.startBackgroundMusic();
         }
         
-        this.showCharacterMessage("🐼 Use the PANDA Reference Board to find all correct answers! Let's go!", 4000);
+        this.showCharacterMessage("🐼 Fill out forms using PANDA data, then decide if you're confident in your answers!", 4000);
     }
     
     startTimer() {
@@ -360,6 +376,7 @@ class TaxFilingGame {
                     <span class="form-level">Level ${this.level}</span>
                 </div>
             </div>
+            <div class="form-fields">
         `;
         
         this.currentForm.fields.forEach((field, index) => {
@@ -386,23 +403,63 @@ class TaxFilingGame {
             formHTML += `</div>`;
         });
         
+        formHTML += `</div>`; // Close form-fields wrapper
+        
         formElement.innerHTML = formHTML;
         
-        // Add event listeners for form validation
-        if (this.formState !== 'empty') {
-            this.addFormValidationListeners();
-        }
+        // Add smooth scrolling behavior
+        this.setupFormScrolling();
+    }
+    
+    setupFormScrolling() {
+        const formContainer = document.querySelector('.form-container');
+        if (!formContainer) return;
         
-        // Force re-render of disabled state
-        setTimeout(() => {
-            this.currentForm.fields.forEach((field, index) => {
-                const fieldId = `field-${index}`;
-                const element = document.getElementById(fieldId);
-                if (element) {
-                    element.disabled = this.formState === 'empty';
+        // Ensure the form container can be scrolled with mouse wheel
+        formContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            formContainer.scrollTop += e.deltaY;
+        }, { passive: false });
+        
+        // Add visual scroll indicator
+        this.addScrollIndicator(formContainer);
+    }
+    
+    addScrollIndicator(container) {
+        // Create scroll indicator
+        const indicator = document.createElement('div');
+        indicator.className = 'scroll-indicator';
+        indicator.innerHTML = '📜 Scroll to see all fields';
+        indicator.style.cssText = `
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        `;
+        
+        container.style.position = 'relative';
+        container.appendChild(indicator);
+        
+        // Hide indicator after scrolling or after 3 seconds
+        const hideIndicator = () => {
+            indicator.style.opacity = '0';
+            setTimeout(() => {
+                if (indicator.parentNode) {
+                    indicator.parentNode.removeChild(indicator);
                 }
-            });
-        }, 100);
+            }, 300);
+        };
+        
+        container.addEventListener('scroll', hideIndicator, { once: true });
+        setTimeout(hideIndicator, 3000);
     }
     
     getPlaceholder(field) {
@@ -501,13 +558,18 @@ class TaxFilingGame {
     validateField(fieldId, field) {
         const element = document.getElementById(fieldId);
         const container = document.getElementById(`${fieldId}-container`);
+        
+        if (!element || !container) {
+            return false;
+        }
+        
         const value = element.value.trim();
         
         // Store the value
         this.currentForm.filledFields[fieldId] = value;
         
         // Remove previous validation classes
-        container.classList.remove('error', 'success', 'shake');
+        container.classList.remove('error', 'success', 'shake', 'correct', 'filled');
         
         // Check if required field is empty
         if (field.required && !value) {
@@ -518,67 +580,87 @@ class TaxFilingGame {
             return false;
         }
         
-        // Validate based on field type
-        let isValid = true;
+        // If field is empty, don't validate format or correctness
+        if (!value) {
+            return true;
+        }
+        
+        // Validate based on field type (format validation)
+        let isValidFormat = true;
         
         switch (field.validation) {
             case 'ein':
-                isValid = /^\d{2}-\d{7}$/.test(value) || value === '';
+                isValidFormat = /^\d{2}-\d{7}$/.test(value);
                 break;
             case 'ssn':
-                isValid = /^\d{3}-\d{2}-\d{4}$/.test(value) || value === '';
+                isValidFormat = /^\d{3}-\d{2}-\d{4}$/.test(value);
                 break;
             case 'phone':
-                isValid = /^\(\d{3}\) \d{3}-\d{4}$/.test(value) || value === '';
+                isValidFormat = /^\(\d{3}\) \d{3}-\d{4}$/.test(value);
                 break;
             case 'email':
-                isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || value === '';
+                isValidFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
                 break;
             case 'zip':
-                isValid = /^\d{5}(-\d{4})?$/.test(value) || value === '';
+                isValidFormat = /^\d{5}(-\d{4})?$/.test(value);
                 break;
             case 'currency':
-                isValid = /^\d+(\.\d{2})?$/.test(value) || value === '';
+                isValidFormat = /^\d+(\.\d{2})?$/.test(value);
                 break;
             case 'number':
-                isValid = /^\d+$/.test(value) || value === '';
+                isValidFormat = /^\d+$/.test(value);
                 break;
             case 'percentage':
-                isValid = /^\d+(\.\d+)?%$/.test(value) || value === '';
+                isValidFormat = /^\d+(\.\d+)?%$/.test(value);
                 break;
             case 'year':
-                isValid = /^\d{4}$/.test(value) && parseInt(value) >= 2020 && parseInt(value) <= 2030 || value === '';
+                isValidFormat = /^\d{4}$/.test(value) && parseInt(value) >= 2020 && parseInt(value) <= 2030;
                 break;
             case 'date':
-                isValid = value !== '' && !isNaN(Date.parse(value));
+                isValidFormat = !isNaN(Date.parse(value));
                 break;
             case 'required':
-                isValid = true; // Just check if not empty, handled above
+                isValidFormat = true; // Just check if not empty, handled above
                 break;
             default:
-                isValid = true;
+                isValidFormat = true;
         }
         
-        if (!isValid && value !== '') {
+        // If format is invalid, show error
+        if (!isValidFormat) {
             container.classList.add('error');
             this.addError(`Invalid format for ${field.label}`);
             return false;
         }
         
-        if (value && isValid) {
-            container.classList.add('filled');
-            if (this.formState === 'reviewed') {
-                container.classList.add('success');
+        // If format is valid and we have a correct answer, check correctness
+        if (field.correct && isValidFormat) {
+            const isCorrect = this.isAnswerCorrect(value, field.correct, field.validation);
+            
+            if (isCorrect) {
+                // Answer is correct - show green ring effect
+                container.classList.add('correct');
+                this.playDingSound();
+                // Simple verification
+                console.log('✅ CORRECT:', field.label);
+            } else {
+                // Answer is wrong - show red error
+                container.classList.add('error');
+                // Simple verification
+                console.log('❌ WRONG:', field.label);
+                
+                // Add a subtle shake effect for wrong answers
+                setTimeout(() => {
+                    container.classList.add('shake');
+                    setTimeout(() => {
+                        container.classList.remove('shake');
+                    }, 500);
+                }, 100);
             }
-            
-            // Play ding sound for valid field entry
+        } else if (value && isValidFormat) {
+            // No correct answer to compare against, just mark as filled
+            container.classList.add('filled');
             this.playDingSound();
-            
-            // Add visual feedback animation
-            container.classList.add('field-ding');
-            setTimeout(() => {
-                container.classList.remove('field-ding');
-            }, 300);
         }
         
         return true;
@@ -646,48 +728,79 @@ class TaxFilingGame {
     
     updateActionButtons() {
         const fillBtn = document.getElementById('fill-btn');
-        const reviewBtn = document.getElementById('review-btn');
-        const submitBtn = document.getElementById('submit-btn');
+        const submitFormBtn = document.getElementById('submit-form-btn');
         
-        if (!fillBtn || !reviewBtn || !submitBtn) {
-            console.error('Action buttons not found!');
+        if (!fillBtn) {
             return;
         }
         
         switch (this.formState) {
             case 'empty':
+                fillBtn.style.display = 'block';
                 fillBtn.disabled = false;
-                reviewBtn.disabled = true;
-                submitBtn.disabled = true;
-                fillBtn.textContent = 'Fill Form';
+                if (submitFormBtn) submitFormBtn.style.display = 'none';
                 break;
             case 'filled':
-                fillBtn.disabled = true;
-                reviewBtn.disabled = false;
-                submitBtn.disabled = true;
-                break;
-            case 'reviewed':
-                fillBtn.disabled = true;
-                reviewBtn.disabled = true;
-                submitBtn.disabled = false;
+                fillBtn.style.display = 'none';
+                // Submit button visibility handled by checkIfFormComplete()
                 break;
         }
     }
     
     fillForm() {
+        // Visual debug updates
+        const debugStatus = document.getElementById('debug-status');
+        if (debugStatus) debugStatus.innerHTML = '🚀 FILLFORM CALLED - Starting...';
+        
         if (this.formState !== 'empty') {
+            if (debugStatus) debugStatus.innerHTML = '❌ Form state not empty, exiting';
             return;
         }
         
         this.formState = 'filled';
+        if (debugStatus) debugStatus.innerHTML = '✅ Form state set to filled';
+        
         this.renderForm();
-        this.updateActionButtons();
-        this.showCharacterMessage("Now enter the tax data accurately!", 2000);
+        if (debugStatus) debugStatus.innerHTML = '✅ renderForm() completed';
+        
+        // Show form and hide fill button
+        const fillBtn = document.getElementById('fill-btn');
+        if (fillBtn) {
+            fillBtn.style.display = 'none';
+            if (debugStatus) debugStatus.innerHTML = '✅ Fill button hidden';
+        }
+        
+        // Add real-time validation to all inputs
+        if (debugStatus) debugStatus.innerHTML = '🔥 About to add validation...';
+        this.addRealTimeValidation();
+        if (debugStatus) debugStatus.innerHTML = '✅ Validation added - looking for fields...';
+        
+        this.showCharacterMessage("Fill out the form using the PANDA reference data!", 3000);
         
         // Auto-focus first input
         const firstInput = document.querySelector('#current-form input, #current-form select');
         if (firstInput) {
             firstInput.focus();
+            if (debugStatus) debugStatus.innerHTML = `✅ Found first input: ${firstInput.id} - Testing in 1 sec...`;
+            
+            // TEST: Add direct test validation after 1 second
+            setTimeout(() => {
+                if (debugStatus) debugStatus.innerHTML = '🧪 TESTING: Setting field to 94-1234567...';
+                firstInput.value = '94-1234567';
+                // Force bright green style directly
+                firstInput.style.cssText = 'border: 5px solid #00ff00 !important; background: rgba(0, 255, 0, 0.3) !important; box-shadow: 0 0 25px rgba(0, 255, 0, 0.9) !important; color: #004400 !important; font-weight: bold !important; transform: scale(1.05) !important;';
+                if (debugStatus) debugStatus.innerHTML = '🧪 Field should be BRIGHT GREEN now! Testing red in 2 sec...';
+                
+                // Also test red after 2 more seconds
+                setTimeout(() => {
+                    if (debugStatus) debugStatus.innerHTML = '🧪 TESTING: Changing to wrong value...';
+                    firstInput.value = 'wrong';
+                    firstInput.style.cssText = 'border: 5px solid #ff0000 !important; background: rgba(255, 0, 0, 0.3) !important; box-shadow: 0 0 25px rgba(255, 0, 0, 0.9) !important; color: #660000 !important; transform: scale(1.05) !important;';
+                    if (debugStatus) debugStatus.innerHTML = '🧪 Field should be BRIGHT RED now! Test complete.';
+                }, 2000);
+            }, 1000);
+        } else {
+            if (debugStatus) debugStatus.innerHTML = '❌ ERROR: No first input field found!';
         }
     }
     
@@ -741,6 +854,108 @@ class TaxFilingGame {
         }
     }
     
+    // Real-time validation system
+    addRealTimeValidation() {
+        console.log('🔥 DEBUG: Adding real-time validation');
+        const inputs = document.querySelectorAll('#current-form input, #current-form select');
+        console.log(`🔥 DEBUG: Found ${inputs.length} input fields`);
+        
+        // Log all field IDs found
+        inputs.forEach(input => {
+            console.log(`🔥 DEBUG: Field found - ID: ${input.id}, Type: ${input.tagName}, Value: "${input.value}"`);
+        });
+        
+        // Map field IDs to correct PANDA data values
+        const correctAnswers = {
+            'field-0': this.pandaData.ein,                    // "94-1234567"
+            'field-1': this.pandaData.totalWages,             // "125000.00"  
+            'field-2': this.pandaData.federalIncomeTax,       // "18750.00"
+            'field-3': this.pandaData.socialSecurityTax,      // "7750.00"
+            'field-4': this.pandaData.medicareTax             // "1812.50"
+        };
+        
+        console.log('🔥 DEBUG: Correct answers map:', correctAnswers);
+        console.log('🔥 DEBUG: PANDA data:', this.pandaData);
+        
+        inputs.forEach((input, index) => {
+            console.log(`🔥 DEBUG: Setting up validation for field ${input.id}`);
+            
+            const validateField = () => {
+                const fieldId = input.id;
+                const value = input.value.trim();
+                const correctValue = correctAnswers[fieldId];
+                
+                console.log(`🔥 VALIDATE: Field ${fieldId} = "${value}" vs correct "${correctValue}"`);
+                
+                if (!correctValue) {
+                    console.log(`❌ DEBUG: No correct answer found for field ${fieldId}`);
+                    return false;
+                }
+                
+                // FORCE bright styling with setAttribute to bypass all CSS
+                if (value === '') {
+                    input.style.cssText = 'border: 2px solid #ddd; background: white; box-shadow: none; color: #333;';
+                    console.log(`⚪ Field ${fieldId}: Empty`);
+                    return false;
+                } else if (value === correctValue) {
+                    input.style.cssText = 'border: 5px solid #00ff00 !important; background: rgba(0, 255, 0, 0.2) !important; box-shadow: 0 0 20px rgba(0, 255, 0, 0.8) !important; color: #004400 !important; font-weight: bold !important;';
+                    console.log(`✅ Field ${fieldId}: CORRECT! Turned GREEN`);
+                    return true;
+                } else {
+                    input.style.cssText = 'border: 5px solid #ff0000 !important; background: rgba(255, 0, 0, 0.2) !important; box-shadow: 0 0 20px rgba(255, 0, 0, 0.8) !important; color: #660000 !important;';
+                    console.log(`❌ Field ${fieldId}: INCORRECT! Turned RED`);
+                    return false;
+                }
+            };
+            
+            // Add multiple event listeners
+            const events = ['input', 'change', 'keyup', 'paste'];
+            events.forEach(eventType => {
+                input.addEventListener(eventType, () => {
+                    console.log(`🔥 EVENT: ${eventType} fired on ${input.id}`);
+                    const isCorrect = validateField();
+                    this.checkIfFormComplete();
+                });
+            });
+            
+            console.log(`✅ DEBUG: Validation setup complete for ${input.id}`);
+        });
+        
+        console.log('✅ DEBUG: All validation event listeners added');
+    }
+    
+    checkIfFormComplete() {
+        const inputs = document.querySelectorAll('#current-form input, #current-form select');
+        let correctCount = 0;
+        let filledCount = 0;
+        
+        inputs.forEach(input => {
+            if (input.value.trim() !== '') {
+                filledCount++;
+                if (input.classList.contains('field-correct')) {
+                    correctCount++;
+                }
+            }
+        });
+        
+        // Show submit button if all fields are filled
+        const submitBtn = document.getElementById('submit-form-btn');
+        if (submitBtn) {
+            if (filledCount === inputs.length) {
+                submitBtn.style.display = 'block';
+                if (correctCount === inputs.length) {
+                    submitBtn.innerHTML = '🚀 SUBMIT FORM (All Correct!)';
+                    submitBtn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                } else {
+                    submitBtn.innerHTML = '🚀 SUBMIT FORM (Check for errors)';
+                    submitBtn.style.background = 'linear-gradient(45deg, #ff9800, #f57c00)';
+                }
+            } else {
+                submitBtn.style.display = 'none';
+            }
+        }
+    }
+
     submitForm() {
         if (this.formState !== 'reviewed') return;
         
@@ -1614,14 +1829,21 @@ class TaxFilingGame {
     createUserProfile() {
         const playerName = document.getElementById('player-name')?.value?.trim();
         
+        // Visual debug update
+        const debugStatus = document.getElementById('debug-status');
+        if (debugStatus) debugStatus.innerHTML = '🚀 Creating user profile...';
+        
         console.log('Game createUserProfile called');
         console.log('Player name:', playerName);
         console.log('Selected avatar:', this.selectedAvatar);
         
         if (!playerName || !this.selectedAvatar) {
-            alert('Please enter your name and select an avatar!');
+            if (debugStatus) debugStatus.innerHTML = '❌ Missing name or avatar!';
+            console.log('Please enter your name and select an avatar!');
             return;
         }
+        
+        if (debugStatus) debugStatus.innerHTML = '✅ Name and avatar found, creating profile...';
         
         this.currentUser = {
             name: playerName,
@@ -1632,12 +1854,21 @@ class TaxFilingGame {
         };
         
         console.log('User profile created:', this.currentUser);
+        if (debugStatus) debugStatus.innerHTML = '✅ Profile created, saving...';
         
         this.saveUserProfile();
         this.updateCurrentUserDisplay();
         
         console.log('About to show start screen...');
+        if (debugStatus) debugStatus.innerHTML = '🎮 Showing start screen...';
+        
         this.showStartScreen();
+        
+        // Final confirmation
+        setTimeout(() => {
+            if (debugStatus) debugStatus.innerHTML = '✅ Start screen should be visible! Click "Start Game" to play!';
+        }, 500);
+        
         console.log('Start screen should now be visible');
     }
     
@@ -1839,9 +2070,15 @@ class TaxFilingGame {
 let game;
 
 function startGame() {
+    const debugStatus = document.getElementById('debug-status');
+    if (debugStatus) debugStatus.innerHTML = '🎮 START GAME clicked!';
+    
     if (game) {
+        if (debugStatus) debugStatus.innerHTML = '✅ Starting game...';
         game.startGame();
+        if (debugStatus) debugStatus.innerHTML = '🎯 Game started! You should see the tax form now!';
     } else {
+        if (debugStatus) debugStatus.innerHTML = '❌ ERROR: Game object not found!';
         console.error('Game object not found!');
     }
 }
@@ -1909,10 +2146,16 @@ function showStartScreen() {
 
 // Profile management functions
 function createUserProfile() {
+    // Visual debug updates
+    const debugStatus = document.getElementById('debug-status');
+    if (debugStatus) debugStatus.innerHTML = '🚀 CREATE PROFILE clicked!';
+    
     console.log('🚀 createUserProfile() clicked!');
     
     const nameInput = document.getElementById('player-name');
     const playerName = nameInput ? nameInput.value.trim() : '';
+    
+    if (debugStatus) debugStatus.innerHTML = `📋 Checking: Name="${playerName}" Avatar=${selectedAvatarGlobal}`;
     
     console.log('📋 Profile Creation Debug:');
     console.log('  - Name input element:', !!nameInput);
@@ -1925,37 +2168,55 @@ function createUserProfile() {
     console.log('  - Game object exists:', !!game);
     
     if (playerName && selectedAvatarGlobal) {
+        if (debugStatus) debugStatus.innerHTML = '✅ Both name and avatar found! Processing...';
         console.log('✅ Both name and avatar present, proceeding...');
-        // Update game object
+        
+        // Create profile directly without calling game object method
+        if (debugStatus) debugStatus.innerHTML = '🎮 Creating profile...';
+        console.log('Creating profile directly...');
+        
+        // Set the game object's selected avatar if it exists
         if (game) {
-            console.log('Setting game.selectedAvatar to:', selectedAvatarGlobal);
             game.selectedAvatar = selectedAvatarGlobal;
-            console.log('Calling game.createUserProfile()...');
-            game.createUserProfile();
-        } else {
-            console.log('Game object not found, creating simple profile...');
-            // Create a simple profile without game object
-            localStorage.setItem('taxProUser', JSON.stringify({
-                name: playerName,
-                avatar: selectedAvatarGlobal,
-                bestScore: 0
-            }));
-            
-            // Show start screen
-            const screens = ['profile-screen', 'start-screen', 'game-screen', 'rankings-screen'];
-            screens.forEach(screenId => {
-                const screen = document.getElementById(screenId);
-                if (screen) {
-                    screen.style.display = screenId === 'start-screen' ? 'flex' : 'none';
-                }
-            });
+            console.log('Set game.selectedAvatar to:', selectedAvatarGlobal);
         }
+        
+        // Create profile in localStorage
+        const profile = {
+            name: playerName,
+            avatar: selectedAvatarGlobal,
+            bestScore: 0,
+            totalGames: 0,
+            dateCreated: new Date().toISOString()
+        };
+        
+        localStorage.setItem('taxProUser', JSON.stringify(profile));
+        console.log('Profile saved:', profile);
+        
+        // Show start screen
+        const screens = ['profile-screen', 'start-screen', 'game-screen', 'rankings-screen'];
+        screens.forEach(screenId => {
+            const screen = document.getElementById(screenId);
+            if (screen) {
+                screen.style.display = screenId === 'start-screen' ? 'flex' : 'none';
+            }
+        });
+        
+        // Update user display
+        const userNameEl = document.getElementById('current-user-name');
+        const userBestEl = document.getElementById('current-user-best');
+        if (userNameEl) userNameEl.textContent = playerName;
+        if (userBestEl) userBestEl.textContent = '0';
+        
+        if (debugStatus) debugStatus.innerHTML = '✅ Profile created! Start screen should be visible!';
+        console.log('✅ Profile created successfully!');
     } else {
+        if (debugStatus) debugStatus.innerHTML = `❌ FAILED: Name="${playerName}" Avatar=${selectedAvatarGlobal}`;
         console.log('❌ VALIDATION FAILED:');
         console.log('  - playerName:', `"${playerName}"`, '(truthy:', !!playerName, ')');
         console.log('  - selectedAvatarGlobal:', selectedAvatarGlobal, '(truthy:', !!selectedAvatarGlobal, ')');
-        console.error('🚨 Alert will be shown because validation failed');
-        alert('Please enter your name and select an avatar!');
+        console.error('🚨 Validation failed - no alert shown');
+        console.log('Please enter your name and select an avatar!');
     }
 }
 
@@ -2056,11 +2317,73 @@ function checkProfileReady() {
     }
 }
 
+// Fill form - called when player clicks fill form button
+window.fillForm = function() {
+    const debugStatus = document.getElementById('debug-status');
+    if (debugStatus) debugStatus.innerHTML = '🚀 GLOBAL fillForm() called!';
+    
+    if (!game) {
+        if (debugStatus) debugStatus.innerHTML = '❌ ERROR: Game object not found!';
+        return;
+    }
+    
+    if (debugStatus) debugStatus.innerHTML = '✅ Game object found - calling game.fillForm()';
+    game.fillForm();
+};
+
+// Submit completed form - called when player clicks submit button
+window.submitCompletedForm = function() {
+    if (!game) {
+        return;
+    }
+    
+    // Calculate score based on correctness
+    const inputs = document.querySelectorAll('#current-form input, #current-form select');
+    let correctCount = 0;
+    let totalFields = inputs.length;
+    
+    inputs.forEach(input => {
+        if (input.classList.contains('field-correct')) {
+            correctCount++;
+        }
+    });
+    
+    const accuracy = (correctCount / totalFields) * 100;
+    const baseScore = Math.floor(accuracy * 2); // 2 points per percent
+    const speedBonus = Math.floor(Math.max(0, game.timeLeft * 1.5));
+    const totalScore = baseScore + speedBonus;
+    
+    game.score += totalScore;
+    game.formsCompleted++;
+    
+    if (accuracy === 100) {
+        game.correctForms++;
+        game.showCharacterMessage(`🎉 Perfect! +${totalScore} points! Next level!`, 2500);
+        game.playSuccessSound();
+    } else {
+        game.showCharacterMessage(`Good effort! ${accuracy.toFixed(0)}% correct. +${totalScore} points!`, 2500);
+    }
+    
+    // Hide submit button
+    const submitBtn = document.getElementById('submit-form-btn');
+    if (submitBtn) submitBtn.style.display = 'none';
+    
+    // Advance to next level after delay
+    setTimeout(() => {
+        game.level++;
+        game.generateNewForm();
+    }, 2000);
+    
+    game.updateUI();
+};
+
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing game...');
     game = new TaxFilingGame();
+    window.game = game; // Make sure it's available globally
     console.log('Game object created:', !!game);
+    console.log('Window.game available:', !!window.game);
 });
 
 // Add some keyboard shortcuts for better gameplay

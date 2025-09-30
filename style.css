@@ -5,6 +5,43 @@
     box-sizing: border-box;
 }
 
+/* Form validation animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes flash {
+    0%, 100% { background-color: #ffebee; }
+    50% { background-color: #ffcdd2; }
+}
+
+/* Field validation styles */
+.field-correct {
+    border: 3px solid #4CAF50 !important;
+    background-color: #e8f5e8 !important;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.6) !important;
+}
+
+.field-incorrect {
+    border: 3px solid #f44336 !important;
+    background-color: #ffebee !important;
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.6) !important;
+    animation: flash 1s ease-in-out infinite !important;
+}
+
+.field-empty {
+    border: 2px solid #ffa726 !important;
+    background-color: #fff3e0 !important;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     overflow: hidden;
@@ -480,19 +517,14 @@ body {
 
 /* PANDA Information Board */
 .panda-board {
-    position: absolute;
-    top: 60px;
-    left: 10px;
-    width: 280px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    width: 100%;
+    background: white;
     border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    border: 2px solid rgba(255, 107, 157, 0.3);
-    z-index: 100;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid #4CAF50;
     font-family: 'Arial', sans-serif;
-    max-height: calc(100vh - 80px);
+    max-height: calc(100vh - 200px);
     overflow-y: auto;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
@@ -585,6 +617,43 @@ body {
 .info-value:hover {
     background: rgba(39, 174, 96, 0.2);
     transform: scale(1.02);
+}
+
+/* Highlight styles for required form data */
+.info-item.highlight {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border-left: 5px solid #2e7d32;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+    margin: 5px 0;
+    padding: 8px 10px;
+}
+
+.info-item.highlight:hover {
+    background: linear-gradient(135deg, #45a049, #388e3c);
+    transform: translateX(5px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+}
+
+.info-item.highlight .info-label {
+    color: white;
+    font-weight: 700;
+    font-size: 0.9em;
+}
+
+.info-item.highlight .info-value {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    font-weight: 700;
+    font-size: 1.1em;
+    padding: 4px 8px;
+}
+
+.info-item.highlight .info-value:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
 }
 
 .panda-toggle {
@@ -686,20 +755,144 @@ body {
     box-shadow: 0 4px 12px rgba(76,175,80,0.5);
 }
 
+/* Player Decision System */
+.player-decision {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    border: 2px solid #3498db;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin: 10px 0;
+}
+
+.confidence-btn {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.confident-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+}
+
+.confident-btn:hover {
+    background: linear-gradient(45deg, #45a049, #3d8b40);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76,175,80,0.4);
+}
+
+.unsure-btn {
+    background: linear-gradient(45deg, #f44336, #d32f2f);
+    color: white;
+    box-shadow: 0 4px 15px rgba(244,67,54,0.3);
+}
+
+.unsure-btn:hover {
+    background: linear-gradient(45deg, #d32f2f, #c62828);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244,67,54,0.4);
+}
+
+.confidence-btn small {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+
+/* Game Instructions Bar */
+.game-instructions {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    padding: 10px 20px;
+    z-index: 1001;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    border-bottom: 3px solid #2e7d32;
+}
+
+.instructions-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.instructions-content h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.instructions-content p {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
 /* Office Layout */
 .office {
     position: relative;
     width: 100%;
-    height: calc(100vh - 60px);
-    top: 60px;
-    overflow: hidden;
+    height: calc(100vh - 120px);
+    top: 120px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #f8f9fa;
+}
+
+/* Left Panel - PANDA Reference Board */
+.left-panel {
+    flex: 0 0 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Right Panel - Form Area */
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Game Content Area */
+.game-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    order: 2;
 }
 
 /* Character Design */
 .character {
     position: absolute;
     bottom: 120px;
-    left: 50px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 50;
 }
 
@@ -956,9 +1149,10 @@ body {
 .desk {
     position: absolute;
     bottom: 0;
-    left: 200px;
-    right: 200px;
-    height: 200px;
+    left: 0;
+    right: 0;
+    height: auto;
+    min-height: 200px;
     background: linear-gradient(to bottom, #D2691E, #A0522D);
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
@@ -971,20 +1165,71 @@ body {
 .form-container {
     flex: 1;
     min-height: 400px;
+    max-height: calc(100vh - 200px);
     height: auto;
     background: white;
     border: 3px solid #333;
     border-radius: 15px;
-    margin: 20px;
+    margin: 0;
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     overflow-y: auto;
     padding: 20px;
+    scroll-behavior: smooth;
+    position: relative;
 }
 
 .form {
     padding: 15px;
     font-size: 12px;
     line-height: 1.4;
+    min-height: 100%;
+}
+
+/* Form scrolling improvements */
+.form-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.form-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 6px;
+    border: 2px solid #ddd;
+}
+
+.form-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #4CAF50, #45a049);
+    border-radius: 6px;
+    border: 1px solid #2E7D32;
+}
+
+.form-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #45a049, #2E7D32);
+}
+
+/* Add a subtle scroll indicator */
+.form-container::after {
+    content: "↓ Scroll to see more fields ↓";
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(76, 175, 80, 0.9);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* Ensure form fields are properly spaced for scrolling */
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 20px;
 }
 
 /* Form Header Styling */
@@ -1044,15 +1289,16 @@ body {
 }
 
 .form-field {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 12px 15px;
     background: rgba(248, 249, 250, 0.8);
     border-radius: 10px;
     border: 2px solid transparent;
     transition: all 0.3s ease;
+    min-height: 60px;
 }
 
 .form-field label {
@@ -1097,7 +1343,27 @@ body {
 
 .form-field.error {
     background: rgba(255, 82, 82, 0.15);
-    border-left: 3px solid #FF5252;
+    border: 2px solid #FF5252;
+    animation: errorPulse 0.5s ease;
+}
+
+.form-field.error input, .form-field.error select {
+    border-color: #FF5252;
+    background: rgba(255, 82, 82, 0.1);
+    color: #d32f2f;
+}
+
+.form-field.correct {
+    background: rgba(76, 175, 80, 0.1) !important;
+    border: 3px solid #4CAF50 !important;
+    animation: correctRing 0.8s ease !important;
+}
+
+.form-field.correct input, .form-field.correct select {
+    border: 3px solid #4CAF50 !important;
+    background: rgba(76, 175, 80, 0.05) !important;
+    color: #2E7D32 !important;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4) !important;
 }
 
 /* Action Buttons */
@@ -1196,6 +1462,22 @@ body {
     background: #95a5a6;
     cursor: not-allowed;
     opacity: 0.6;
+}
+
+.submit-form-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049) !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 15px 25px;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    transition: all 0.3s ease;
+}
+
+.submit-form-btn:hover:not(:disabled) {
+    background: linear-gradient(45deg, #45a049, #2E7D32) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
 }
 
 /* Mailbox - Now part of floating button panel */
@@ -1963,6 +2245,93 @@ body {
     animation: errorShake 0.5s ease;
 }
 
+@keyframes correctRing {
+    0% { 
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0.3);
+        transform: scale(1.02);
+    }
+    100% { 
+        box-shadow: 0 0 0 20px rgba(76, 175, 80, 0);
+        transform: scale(1);
+    }
+}
+
+@keyframes errorPulse {
+    0%, 100% { 
+        border-color: #FF5252;
+        background: rgba(255, 82, 82, 0.15);
+    }
+    50% { 
+        border-color: #F44336;
+        background: rgba(255, 82, 82, 0.25);
+        transform: scale(1.01);
+    }
+}
+
+@keyframes successPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.5);
+    }
+    50% { 
+        transform: scale(1.02);
+        box-shadow: 0 0 0 8px rgba(76, 175, 80, 0.2);
+    }
+}
+
+/* Real-time field validation - individual field styling */
+input.field-correct, select.field-correct {
+    border: 3px solid #00ff00 !important;
+    background-color: rgba(0, 255, 0, 0.1) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5) !important;
+    color: #00aa00 !important;
+    font-weight: bold !important;
+    animation: greenGlow 0.5s ease-in-out !important;
+}
+
+input.field-incorrect, select.field-incorrect {
+    border: 3px solid #ff0000 !important;
+    background-color: rgba(255, 0, 0, 0.1) !important;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
+    color: #cc0000 !important;
+    animation: redPulse2 0.5s ease-in-out !important;
+}
+
+@keyframes greenGlow {
+    0% { 
+        box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+        transform: scale(1.02);
+    }
+    100% { 
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        transform: scale(1);
+    }
+}
+
+@keyframes redPulse2 {
+    0% { 
+        border-color: #ff0000;
+        background-color: rgba(255, 0, 0, 0.1);
+    }
+    50% { 
+        border-color: #ff3333;
+        background-color: rgba(255, 0, 0, 0.2);
+    }
+    100% { 
+        border-color: #ff0000;
+        background-color: rgba(255, 0, 0, 0.1);
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .title h1 {
@@ -1993,17 +2362,58 @@ body {
         height: 50px;
     }
     
-    .desk {
-        left: 20px;
-        right: 20px;
+    .game-instructions {
+        top: 50px;
+        padding: 8px 15px;
+    }
+    
+    .instructions-content h4 {
+        font-size: 1em;
+    }
+    
+    .instructions-content p {
+        font-size: 0.8em;
+    }
+    
+    .office {
+        top: 100px;
+        height: calc(100vh - 100px);
         flex-direction: column;
-        height: 250px;
+        gap: 15px;
+    }
+    
+    .left-panel {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+    
+    .right-panel {
+        flex: 1;
     }
     
     .form-container {
         margin-right: 0;
         margin-bottom: 10px;
-        height: 120px;
+        max-height: calc(100vh - 150px);
+        min-height: 200px;
+    }
+    
+    .form-field {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        min-height: auto;
+        padding: 10px;
+    }
+    
+    .form-field label {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    .form-field input, .form-field select {
+        width: 100%;
+        max-width: 100%;
     }
     
     .action-buttons {
@@ -2023,8 +2433,8 @@ body {
     }
     
     .panda-board {
-        width: 250px;
-        top: 50px;
+        width: 280px;
+        top: 100px;
         left: 5px;
         padding: 10px;
     }
@@ -2077,8 +2487,8 @@ body {
     }
     
     .panda-board {
-        width: 200px;
-        top: 40px;
+        width: 220px;
+        top: 90px;
         left: 2px;
         padding: 8px;
         font-size: 0.9em;
@@ -2107,6 +2517,44 @@ body {
     
     .info-value {
         font-size: 0.7em;
+    }
+    
+    .game-instructions {
+        top: 40px;
+        padding: 6px 10px;
+    }
+    
+    .instructions-content h4 {
+        font-size: 0.9em;
+    }
+    
+    .instructions-content p {
+        font-size: 0.75em;
+    }
+    
+    .office {
+        top: 90px;
+        height: calc(100vh - 90px);
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .left-panel {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+    
+    .right-panel {
+        flex: 1;
+        padding: 15px;
+    }
+    
+    .form-container {
+        margin-right: 0;
+        margin-bottom: 5px;
+        max-height: calc(100vh - 120px);
+        min-height: 150px;
     }
 }
 

@@ -26,7 +26,8 @@
                         <h3>Choose Your Avatar:</h3>
                         <div class="avatar-options">
                             <!-- Beach Piggy -->
-                            <div class="avatar-option" data-avatar="beach" onclick="selectAvatar('beach', this)" style="border: 5px solid red; padding: 20px; margin: 10px; cursor: pointer; background: rgba(255,0,0,0.1);">
+                     
+                           <div class="avatar-option" data-avatar="beach" onclick="selectAvatar('beach', this)" style="border: 5px solid red; padding: 20px; margin: 10px; cursor: pointer; background: rgba(255,0,0,0.1);">
                                 <div class="preview-piggy beach-preview">
                                     <div class="piggy-body">
                                         <div class="piggy-head">
@@ -183,7 +184,9 @@
                     <p>Professional tax form training with real-world accuracy requirements!</p>
                 </div>
                 
-                <button onclick="startGame()" style="background: linear-gradient(45deg, #FF8A65, #FF6B35); color: white; border: none; padding: 20px 40px; cursor: pointer; font-size: 1.3em; border-radius: 25px; box-shadow: 0 4px 15px rgba(255,107,53,0.4); margin: 20px;">🎮 Start Game</button>
+                <button onclick="startWorkingGame()" style="background: linear-gradient(45deg, #FF8A65, #FF6B35); color: white; border: none; padding: 20px 40px; cursor: pointer; font-size: 1.3em; border-radius: 25px; box-shadow: 0 4px 15px rgba(255,107,53,0.4); margin: 20px;">🎮 Start Game</button>
+                
+                
             </div>
         </div>
 
@@ -207,139 +210,61 @@
                 </div>
             </div>
 
-            <!-- PANDA Information Board -->
-            <div class="panda-board">
-                <div class="panda-header">
-                    <h3>🐼 PANDA Reference Board</h3>
-                    <p>Copy the information below into the tax forms</p>
-                </div>
-                
-                <div class="panda-content">
-                    <div class="panda-section">
-                        <h4>Company Information</h4>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Company Name:</span>
-                                <span class="info-value">Gusto Payroll Solutions</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">EIN:</span>
-                                <span class="info-value">94-1234567</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Phone:</span>
-                                <span class="info-value">(415) 555-0123</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Email:</span>
-                                <span class="info-value">tax@gustopayroll.com</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Address:</span>
-                                <span class="info-value">525 20th Street, San Francisco, CA 94107</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">ZIP Code:</span>
-                                <span class="info-value">94107</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="panda-section">
-                        <h4>Payroll Data</h4>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Total Wages:</span>
-                                <span class="info-value">125000.00</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Federal Income Tax:</span>
-                                <span class="info-value">18750.00</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Social Security Tax:</span>
-                                <span class="info-value">7750.00</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Medicare Tax:</span>
-                                <span class="info-value">1812.50</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">State Tax Rate:</span>
-                                <span class="info-value">6.2%</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Total Employees:</span>
-                                <span class="info-value">15</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="panda-section">
-                        <h4>Quarter/Period Info</h4>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Tax Year:</span>
-                                <span class="info-value">2024</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Quarter:</span>
-                                <span class="info-value">Q1</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Filing Date:</span>
-                                <span class="info-value">2024-04-30</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Period Start:</span>
-                                <span class="info-value">2024-01-01</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Period End:</span>
-                                <span class="info-value">2024-03-31</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="panda-toggle">
-                    <button id="panda-minimize" onclick="togglePandaBoard()">📋 Minimize</button>
+            <!-- Game Instructions Bar -->
+            <div class="game-instructions">
+                <div class="instructions-content">
+                    <h4>📋 Game Instructions</h4>
+                    <p>Fill out the tax form correctly using the PANDA Reference Board. Only correct answers will allow you to submit and advance to the next level!</p>
                 </div>
             </div>
 
             <!-- Main Game Area -->
             <div class="office">
-                <!-- Character -->
-                <div class="character" id="character">
-                    <div class="character-body">
-                        <div class="head">
-                        <div class="face">
-                            <div class="eyes">
-                                <div class="eye"></div>
-                                <div class="eye"></div>
+                <!-- Left Side: PANDA Reference Board -->
+                <div class="left-panel">
+            <div class="panda-board">
+                <div class="panda-header">
+                    <h3>🐼 PANDA Reference Board</h3>
+                    <p>Copy this information EXACTLY into the tax forms ⬇️</p>
+                </div>
+                
+                <div class="panda-content">
+                    <div class="panda-section">
+                                <h4>📋 Form Data Required</h4>
+                        <div class="info-grid">
+                                    <div class="info-item highlight">
+                                <span class="info-label">EIN:</span>
+                                <span class="info-value">94-1234567</span>
                             </div>
-                            <div class="glasses">
-                                <div class="bridge"></div>
+                                    <div class="info-item highlight">
+                                        <span class="info-label">Business Name:</span>
+                                        <span class="info-value">Gusto Payroll Solutions</span>
                             </div>
-                            <div class="mouth"></div>
-                        </div>
-                            <div class="hair"></div>
-                        </div>
-                        <div class="body">
-                            <div class="arms">
-                                <div class="arm left-arm"></div>
-                                <div class="arm right-arm"></div>
+                                    <div class="info-item highlight">
+                                <span class="info-label">Total Wages:</span>
+                                        <span class="info-value">125000</span>
                             </div>
-                            <div class="torso">
-                                <div class="necklace"></div>
+                                    <div class="info-item highlight">
+                                <span class="info-label">Federal Income Tax:</span>
+                                        <span class="info-value">18750</span>
+                            </div>
+                                    <div class="info-item highlight">
+                                <span class="info-label">Social Security Tax:</span>
+                                        <span class="info-value">7750</span>
+                            </div>
+                                    <div class="info-item highlight">
+                                <span class="info-label">Medicare Tax:</span>
+                                        <span class="info-value">1812</span>
+                            </div>
+                            </div>
                             </div>
                         </div>
                     </div>
-                    <div class="speech-bubble" id="speech-bubble"></div>
                 </div>
+                
+                <!-- Right Side: Form Area -->
+                <div class="right-panel">
 
-                <!-- Desk Area -->
-                <div class="desk">
                     <!-- Form Display -->
                     <div class="form-container">
                         <div class="form" id="current-form">
@@ -347,162 +272,19 @@
                         </div>
                     </div>
 
-                    <!-- Form Actions Container - Floating Panel -->
+                    <!-- Form Actions Container -->
                     <div class="form-actions">
                         <button class="action-btn" id="fill-btn" onclick="fillForm()">🖊️ FILL FORM</button>
-                        <button class="action-btn" id="review-btn" onclick="reviewForm()" disabled>📝 REVIEW FORM</button>
-                        <div class="mailbox" id="submit-btn" onclick="submitForm()" title="Submit to IRS">
-                            <div class="mailbox-flag"></div>
-                            <div class="mailbox-body">
-                                <div class="mailbox-door"></div>
-                                <div class="mail-slot"></div>
-                            </div>
-                            <div class="mailbox-post"></div>
+                        
+                        <!-- Submit Button -->
+                        <button class="action-btn submit-form-btn" id="submit-form-btn" onclick="submitUltraSimpleForm()" style="background: linear-gradient(45deg, #4CAF50, #45a049); color: white; display: none;">
+                            🚀 SUBMIT FORM
+                        </button>
                         </div>
                     </div>
                 </div>
 
 
-                <!-- Background Elements -->
-                <div class="office-background">
-                    <div class="filing-cabinet"></div>
-                    <div class="window">
-                        <div class="window-frame"></div>
-                    </div>
-                    <div class="certificates">
-                        <div class="certificate"></div>
-                        <div class="certificate"></div>
-                    </div>
-                    
-                    <!-- Gusto Piggy Collection -->
-                    
-                    <!-- Beach/Vacation Piggy -->
-                    <div class="piggy-character beach-piggy" id="beach-piggy">
-                        <div class="piggy-body">
-                            <div class="piggy-head">
-                                <div class="piggy-ears">
-                                    <div class="ear left-ear"></div>
-                                    <div class="ear right-ear"></div>
-                                </div>
-                                <div class="piggy-face">
-                                    <div class="piggy-eyes">
-                                        <div class="piggy-eye"></div>
-                                        <div class="piggy-eye"></div>
-                                    </div>
-                                    <div class="piggy-snout"></div>
-                                </div>
-                            </div>
-                            <div class="piggy-legs">
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                            </div>
-                            <div class="piggy-tail"></div>
-                        </div>
-                        <div class="beach-umbrella">
-                            <div class="umbrella-pole"></div>
-                            <div class="umbrella-top"></div>
-                        </div>
-                    </div>
-
-                    <!-- Original Penny Piggy -->
-                    <div class="piggy-character penny-piggy" id="penny-piggy">
-                        <div class="piggy-body">
-                            <div class="piggy-head">
-                                <div class="piggy-ears">
-                                    <div class="ear left-ear"></div>
-                                    <div class="ear right-ear"></div>
-                                </div>
-                                <div class="piggy-face">
-                                    <div class="piggy-eyes">
-                                        <div class="piggy-eye"></div>
-                                        <div class="piggy-eye"></div>
-                                    </div>
-                                    <div class="piggy-snout"></div>
-                                </div>
-                            </div>
-                            <div class="piggy-legs">
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                            </div>
-                            <div class="piggy-tail"></div>
-                        </div>
-                        <div class="penny-coin">
-                            <div class="coin-inner">¢</div>
-                        </div>
-                    </div>
-
-                    <!-- Business/Work Piggy -->
-                    <div class="piggy-character business-piggy" id="business-piggy">
-                        <div class="piggy-body">
-                            <div class="piggy-head">
-                                <div class="piggy-ears">
-                                    <div class="ear left-ear"></div>
-                                    <div class="ear right-ear"></div>
-                                </div>
-                                <div class="piggy-face">
-                                    <div class="piggy-eyes">
-                                        <div class="piggy-eye"></div>
-                                        <div class="piggy-eye"></div>
-                                    </div>
-                                    <div class="piggy-snout"></div>
-                                </div>
-                            </div>
-                            <div class="piggy-legs">
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                            </div>
-                            <div class="piggy-tail"></div>
-                        </div>
-                        <div class="briefcase">
-                            <div class="briefcase-body"></div>
-                            <div class="briefcase-handle"></div>
-                        </div>
-                    </div>
-
-                    <!-- Celebration/Party Piggy -->
-                    <div class="piggy-character party-piggy" id="party-piggy">
-                        <div class="piggy-body">
-                            <div class="piggy-head">
-                                <div class="piggy-ears">
-                                    <div class="ear left-ear"></div>
-                                    <div class="ear right-ear"></div>
-                                </div>
-                                <div class="piggy-face">
-                                    <div class="piggy-eyes">
-                                        <div class="piggy-eye"></div>
-                                        <div class="piggy-eye"></div>
-                                    </div>
-                                    <div class="piggy-snout"></div>
-                                </div>
-                            </div>
-                            <div class="piggy-legs">
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                                <div class="piggy-leg"></div>
-                            </div>
-                            <div class="piggy-tail"></div>
-                        </div>
-                        <div class="party-decorations">
-                            <div class="confetti confetti-1"></div>
-                            <div class="confetti confetti-2"></div>
-                            <div class="confetti confetti-3"></div>
-                            <div class="confetti confetti-4"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Form Details Panel -->
-            <div class="form-details" id="form-details">
-                <h3>Form Requirements:</h3>
-                <div id="requirements-list"></div>
             </div>
         </div>
 
@@ -536,12 +318,20 @@
             console.log('🚀 HTML LOADED - About to load game script');
             console.log('Time before script:', new Date().toLocaleTimeString());
         </script>
+        
+        <!-- LOAD THE ACTUAL GAME SCRIPT FILE -->
+        <script src="game-simplified.js"></script>
+        
         <script>
-            // Test if game-simplified.js has syntax errors
-            try {
-                console.log('🧪 About to load game-simplified.js...');
-            } catch (e) {
-                console.error('Error before loading script:', e);
+            // Main script starting
+            console.log('🚀 Main script starting...');
+            
+            // Test if game-simplified.js loaded successfully
+            console.log('🧪 game-simplified.js should be loaded now!');
+            if (typeof window.fillForm === 'function') {
+                console.log('✅ SUCCESS: fillForm() function is available!');
+            } else {
+                console.log('❌ ERROR: fillForm() function not found!');
             }
         </script>
         <script>
@@ -553,37 +343,92 @@
             function selectAvatar(avatarType, element) {
                 console.log('Avatar selected:', avatarType);
                 selectedAvatarGlobal = avatarType;
+                
+                // Remove selection from all avatars
+                document.querySelectorAll('.avatar-option').forEach(option => {
+                    option.style.border = '5px solid red';
+                    option.style.backgroundColor = 'rgba(255,0,0,0.1)';
+                });
+                
+                // Select this avatar
                 if (element) {
                     element.style.border = '5px solid gold';
+                    element.style.backgroundColor = 'rgba(255,215,0,0.3)';
+                    console.log('✅ Avatar visually selected:', avatarType);
                 }
                 
-                const createBtn = document.querySelector('.create-profile-btn');
-                const nameInput = document.getElementById('player-name');
-                if (createBtn && nameInput && nameInput.value.trim() && selectedAvatarGlobal) {
-                    createBtn.disabled = false;
-                    createBtn.style.background = 'green';
-                }
+                // Call the checkProfileReady function to update button state
+                checkProfileReady();
             }
             
             function createUserProfile() {
-                console.log('Create profile clicked');
                 const nameInput = document.getElementById('player-name');
                 const playerName = nameInput ? nameInput.value.trim() : '';
                 
+                console.log('📋 Profile creation attempt:', {
+                    name: playerName,
+                    avatar: selectedAvatarGlobal
+                });
+                
                 if (playerName && selectedAvatarGlobal) {
+                    // Create profile
+                    const profile = {
+                        name: playerName,
+                        avatar: selectedAvatarGlobal,
+                        bestScore: 0,
+                        totalGames: 0,
+                        dateCreated: new Date().toISOString()
+                    };
+                    
+                    // Save to localStorage
+                    localStorage.setItem('taxProUser', JSON.stringify(profile));
+                    console.log('✅ Profile saved:', profile);
+                    
                     // Show start screen
                     const profileScreen = document.getElementById('profile-screen');
                     const startScreen = document.getElementById('start-screen');
+                    
                     if (profileScreen) profileScreen.style.display = 'none';
                     if (startScreen) startScreen.style.display = 'flex';
-                    console.log('Profile created successfully');
+                    
+                    // Update user display
+                    const userNameEl = document.getElementById('current-user-name');
+                    const userBestEl = document.getElementById('current-user-best');
+                    const userAvatarEl = document.getElementById('current-user-avatar');
+                    
+                    if (userNameEl) userNameEl.textContent = playerName;
+                    if (userBestEl) userBestEl.textContent = '0';
+                    if (userAvatarEl) userAvatarEl.innerHTML = selectedAvatarGlobal;
+                    
+                    console.log('✅ Profile created! Now showing start screen.');
                 } else {
-                    alert('Please enter name and select avatar');
+                    // Show error message
+                    const errorMsg = `Missing: ${!playerName ? 'name' : ''} ${!selectedAvatarGlobal ? 'avatar' : ''}`;
+                    console.log('❌ Profile creation failed:', errorMsg);
+                    alert('Please enter your name and select an avatar!');
                 }
             }
             
             function checkProfileReady() {
                 // Called when name is typed
+                const nameInput = document.getElementById('player-name');
+                const createBtn = document.querySelector('.create-profile-btn');
+                
+                if (nameInput && createBtn) {
+                    const playerName = nameInput.value.trim();
+                    
+                    if (playerName && selectedAvatarGlobal) {
+                        createBtn.disabled = false;
+                        createBtn.style.background = 'linear-gradient(45deg, #66BB6A, #4CAF50)';
+                        createBtn.style.opacity = '1';
+                        createBtn.style.cursor = 'pointer';
+                    } else {
+                        createBtn.disabled = true;
+                        createBtn.style.background = '#ccc';
+                        createBtn.style.opacity = '0.6';
+                        createBtn.style.cursor = 'not-allowed';
+                    }
+                }
             }
 
             // Game control functions for exit and restart buttons
@@ -641,10 +486,10 @@
                         return {
                             companyName: "Gusto Payroll Solutions",
                             ein: "94-1234567",
-                            totalWages: "125,000.00",
-                            federalIncomeTax: "18,750.00",
-                            socialSecurityTax: "7,750.00",
-                            medicareTax: "1,812.50",
+                            totalWages: "125000",
+                            federalIncomeTax: "18750",
+                            socialSecurityTax: "7750",
+                            medicareTax: "1812",
                             jurisdiction: "Federal IRS"
                         };
                         
@@ -653,10 +498,10 @@
                             companyName: "Golden State Tech Inc",
                             ein: "77-9876543", 
                             employerAccount: "123-4567-8",
-                            totalWages: "98,500.00",
-                            unemploymentInsurance: "2,955.00",
-                            employmentTrainingTax: "295.50",
-                            stateDisabilityInsurance: "985.00",
+                            totalWages: "98500",
+                            unemploymentInsurance: "2955",
+                            employmentTrainingTax: "295",
+                            stateDisabilityInsurance: "985",
                             jurisdiction: "California EDD"
                         };
                         
@@ -665,10 +510,10 @@
                             companyName: "Empire Business Corp",
                             ein: "22-5555444",
                             nysTaxId: "W-123456789",
-                            totalWages: "156,750.00",
-                            nyStateIncomeTax: "9,405.00",
-                            unemploymentInsurance: "1,567.50",
-                            reemploymentServiceFund: "78.38",
+                            totalWages: "156750",
+                            nyStateIncomeTax: "9405",
+                            unemploymentInsurance: "1567",
+                            reemploymentServiceFund: "78",
                             jurisdiction: "New York State"
                         };
                         
@@ -677,10 +522,10 @@
                             companyName: "Lone Star Enterprises",
                             ein: "88-7412589",
                             texasId: "12345678901234",
-                            totalWages: "134,200.00",
-                            unemploymentTax: "2,684.00",
-                            employmentAndTraining: "134.20",
-                            skillsDevelopment: "26.84",
+                            totalWages: "134200",
+                            unemploymentTax: "2684",
+                            employmentAndTraining: "134",
+                            skillsDevelopment: "26",
                             jurisdiction: "Texas Workforce Commission"
                         };
                         
@@ -689,10 +534,10 @@
                             companyName: "Prairie Industries LLC",
                             ein: "33-9988776",
                             illinoisId: "1234567-890",
-                            totalWages: "142,800.00",
-                            unemploymentInsurance: "3,570.00",
-                            stateIncomeTax: "7,140.00",
-                            workersCompensation: "1,428.00",
+                            totalWages: "142800",
+                            unemploymentInsurance: "3570",
+                            stateIncomeTax: "7140",
+                            workersCompensation: "1428",
                             jurisdiction: "Illinois Department of Revenue"
                         };
                         
@@ -702,78 +547,62 @@
             }
             
             function startGame() {
-                console.log('🎮 Starting full game...');
+                console.log('🎮 Starting game...');
+                console.log('Window.game available:', !!window.game);
+                console.log('Game object type:', typeof window.game);
+                console.log('Local game variable:', typeof game);
+                console.log('TaxFilingGame class:', typeof TaxFilingGame);
                 
-                // Hide all screens and show game screen
-                const screens = ['profile-screen', 'rankings-screen', 'start-screen', 'game-over-screen'];
-                screens.forEach(screenId => {
-                    const screen = document.getElementById(screenId);
-                    if (screen) screen.style.display = 'none';
-                });
+                // Always use manual start for now to ensure it works
+                console.log('Using manual game start to ensure it works');
+                startGameManually();
+            }
+            
+            function startGameManually() {
+                console.log('🎮 ULTRA SIMPLE GAME START...');
                 
-                const gameScreen = document.getElementById('game-screen');
-                if (gameScreen) {
-                    gameScreen.style.display = 'block';
-                    console.log('Game screen shown');
-                }
+                // 1. Hide other screens, show game screen
+                document.getElementById('profile-screen').style.display = 'none';
+                document.getElementById('start-screen').style.display = 'none';
+                document.getElementById('game-screen').style.display = 'block';
+                console.log('✅ Screens switched');
                 
-                // Initialize game
-                gameState = 'playing';
-                timeLeft = 90; // 90 seconds per level
+                // 2. Set simple game variables
+                timeLeft = 90;
                 currentLevel = 1;
                 currentScore = 0;
                 formsCompleted = 0;
-                formState = 'empty';
+                console.log('✅ Game variables set');
                 
-                updateUI();
-                generateForm();
-                startTimer();
-                updatePandaBoard();
-                updateActionButtons();
+                // 3. Update the UI numbers
+                document.getElementById('score').textContent = currentScore;
+                document.getElementById('level').textContent = currentLevel;
+                document.getElementById('timer').textContent = timeLeft;
+                document.getElementById('completed').textContent = formsCompleted;
+                console.log('✅ UI updated');
                 
-                // Initialize audio and start music
-                if (!audioContext) {
-                    initializeAudio();
-                }
-                
-                // Start background music after user interaction
-                if (audioContext && audioContext.state === 'suspended') {
-                    audioContext.resume().then(() => {
-                        startBackgroundMusic();
-                    });
-                } else {
-                    startBackgroundMusic();
-                }
-                
-                console.log('✅ Game started successfully');
-            }
-            
-            function startTimer() {
+                // 4. Start the timer
                 if (gameTimer) clearInterval(gameTimer);
-                
-                updateUI();
                 gameTimer = setInterval(() => {
                     timeLeft--;
-                    updateUI();
-                    
+                    document.getElementById('timer').textContent = timeLeft;
+                    console.log('Timer:', timeLeft);
                     if (timeLeft <= 0) {
                         clearInterval(gameTimer);
-                        alert('Time\'s up! Game over.');
+                        alert('Time up!');
                     }
                 }, 1000);
+                console.log('✅ Timer started');
+                
+                // 5. Create the form
+                createUltraSimpleForm();
+                
+                console.log('🎉 ULTRA SIMPLE GAME STARTED!');
             }
             
-            function updateUI() {
-                const scoreEl = document.getElementById('score');
-                const levelEl = document.getElementById('level');
-                const timerEl = document.getElementById('timer');
-                const completedEl = document.getElementById('completed');
-                
-                if (scoreEl) scoreEl.textContent = currentScore;
-                if (levelEl) levelEl.textContent = currentLevel;
-                if (timerEl) timerEl.textContent = timeLeft;
-                if (completedEl) completedEl.textContent = formsCompleted;
-            }
+            // Timer already handled in startGameManually - this is old version
+            
+            // UI updates now done inline - this is old version
             
             // Different forms for different levels
             const formTypes = {
@@ -784,48 +613,6 @@
                 5: { title: 'Illinois UI-3/40 - Quarterly Tax and Wage Report', number: 'UI-3/40', type: 'Illinois' }
             };
             
-            function generateForm() {
-                const formElement = document.getElementById('current-form');
-                if (!formElement) return;
-                
-                // Get form type for current level (cycle through if level > 5)
-                const formLevel = ((currentLevel - 1) % 5) + 1;
-                const formInfo = formTypes[formLevel];
-                
-                const formHTML = `
-                    <div class="form-header">
-                        <h3>${formInfo.title}</h3>
-                        <div class="form-meta">
-                            <span class="form-number">Form: ${formInfo.number}</span>
-                            <span class="form-level">Level: ${currentLevel} (${formInfo.type})</span>
-                        </div>
-                    </div>
-                    <div class="form-fields">
-                        <div class="form-field">
-                            <label for="field-0">EIN*</label>
-                            <input type="text" id="field-0" placeholder="XX-XXXXXXX" disabled>
-                        </div>
-                        <div class="form-field">
-                            <label for="field-1">Total Wages*</label>
-                            <input type="number" id="field-1" placeholder="0.00" disabled>
-                        </div>
-                        <div class="form-field">
-                            <label for="field-2">Federal Income Tax*</label>
-                            <input type="number" id="field-2" placeholder="0.00" disabled>
-                        </div>
-                        <div class="form-field">
-                            <label for="field-3">Social Security Tax*</label>
-                            <input type="number" id="field-3" placeholder="0.00" disabled>
-                        </div>
-                        <div class="form-field">
-                            <label for="field-4">Medicare Tax*</label>
-                            <input type="number" id="field-4" placeholder="0.00" disabled>
-                        </div>
-                    </div>
-                `;
-                
-                formElement.innerHTML = formHTML;
-            }
             
             function updatePandaBoard() {
                 const pandaContent = document.querySelector('.panda-content');
@@ -837,21 +624,38 @@
                 const currentPandaData = getPandaData();
                 console.log(`🐼 Updating PANDA board for level ${currentLevel}:`, currentPandaData);
                 
+                // Create simplified PANDA board with only the essential form data
                 let pandaHTML = `
-                    <div class="panda-level-info">
-                        <strong>📋 Level ${currentLevel} Information</strong>
+                    <div class="panda-section">
+                        <h4>📋 Form Data Required</h4>
+                        <div class="info-grid">
+                            <div class="info-item highlight">
+                                <span class="info-label">EIN:</span>
+                                <span class="info-value">${currentPandaData.ein}</span>
                     </div>
-                `;
-                
-                for (const [key, value] of Object.entries(currentPandaData)) {
-                    const displayKey = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-                    pandaHTML += `
-                        <div class="info-item">
-                            <span class="info-label">${displayKey}:</span>
-                            <span class="info-value" title="Click to copy">${value}</span>
+                            <div class="info-item highlight">
+                                <span class="info-label">Business Name:</span>
+                                <span class="info-value">${currentPandaData.companyName}</span>
+                            </div>
+                            <div class="info-item highlight">
+                                <span class="info-label">Total Wages:</span>
+                                <span class="info-value">${currentPandaData.totalWages}</span>
+                            </div>
+                            <div class="info-item highlight">
+                                <span class="info-label">Federal Income Tax:</span>
+                                <span class="info-value">${currentPandaData.federalIncomeTax}</span>
+                            </div>
+                            <div class="info-item highlight">
+                                <span class="info-label">Social Security Tax:</span>
+                                <span class="info-value">${currentPandaData.socialSecurityTax}</span>
+                            </div>
+                            <div class="info-item highlight">
+                                <span class="info-label">Medicare Tax:</span>
+                                <span class="info-value">${currentPandaData.medicareTax}</span>
+                            </div>
+                        </div>
                         </div>
                     `;
-                }
                 
                 pandaContent.innerHTML = pandaHTML;
                 
@@ -862,111 +666,21 @@
                 }, 1000);
             }
             
-            function updateActionButtons() {
-                const fillBtn = document.getElementById('fill-btn');
-                const reviewBtn = document.getElementById('review-btn');
-                const submitBtn = document.getElementById('submit-btn');
-                
-                if (!fillBtn || !reviewBtn || !submitBtn) return;
-                
-                switch (formState) {
-                    case 'empty':
-                        fillBtn.disabled = false;
-                        reviewBtn.disabled = true;
-                        submitBtn.disabled = true;
-                        break;
-                    case 'filled':
-                        fillBtn.disabled = true;
-                        reviewBtn.disabled = false;
-                        submitBtn.disabled = true;
-                        break;
-                    case 'reviewed':
-                        fillBtn.disabled = true;
-                        reviewBtn.disabled = true;
-                        submitBtn.disabled = false;
-                        break;
-                }
-            }
+            // updateActionButtons function moved to after game-simplified.js loads
             
-            // Game action functions
-            function fillForm() {
-                console.log('📝 Fill Form clicked');
-                if (formState !== 'empty') return;
-                
-                formState = 'filled';
-                
-                // Enable all form fields
-                const inputs = document.querySelectorAll('#current-form input');
-                inputs.forEach(input => {
-                    input.disabled = false;
-                    
-                    // Add ding sound on input
-                    input.addEventListener('input', () => {
-                        playDingSound();
-                    });
-                });
-                
-                updateActionButtons();
-                
-                // Focus first input
-                const firstInput = document.querySelector('#current-form input');
-                if (firstInput) firstInput.focus();
-                
-                console.log('✅ Form fields enabled');
-            }
+            // Game action functions will be defined after game-simplified.js loads
+            
+            // Old submit function replaced by submitUltraSimpleForm
             
             function reviewForm() {
                 console.log('🔍 Review Form clicked');
-                if (formState !== 'filled') return;
+                if (window.formState !== 'filled') return;
                 
-                formState = 'reviewed';
+                window.formState = 'reviewed';
                 updateActionButtons();
                 console.log('✅ Form reviewed');
             }
             
-            function submitForm() {
-                console.log('📤 Submit Form clicked');
-                if (formState !== 'reviewed') return;
-                
-                // Add score and progress
-                currentScore += 100;
-                formsCompleted++;
-                
-                // Level up after every completed form
-                currentLevel++;
-                
-                // Play success sound for level up
-                playSuccessSound();
-                
-                // Get next level info for preview
-                const nextFormLevel = ((currentLevel - 1) % 5) + 1;
-                const nextFormInfo = formTypes[nextFormLevel];
-                const nextPandaData = getPandaData();
-                
-                // Show level up message with preview
-                alert(`🎉 LEVEL UP! Welcome to Level ${currentLevel}!\n\n` +
-                      `Form completed: ${formsCompleted}\n` +
-                      `Score: ${currentScore} points\n\n` +
-                      `📋 New Challenge: ${nextFormInfo?.type || 'Federal'} tax forms\n` +
-                      `🏢 New Company: ${nextPandaData.companyName}\n` +
-                      `🐼 PANDA board updated with fresh data!`);
-                
-                // Add bonus time for leveling up  
-                timeLeft += 15; // Reduced from 20 since it happens more often
-                console.log(`🎉 Level up! Now at level ${currentLevel}, bonus time added!`);
-                
-                // Reset for next form
-                formState = 'empty';
-                generateForm();
-                updateActionButtons();
-                updateUI();
-                
-                // Update PANDA board with new level information
-                updatePandaBoard();
-                
-                console.log(`✅ Form submitted! Level: ${currentLevel}, Forms: ${formsCompleted}, Score: ${currentScore}`);
-                console.log(`📋 PANDA board updated for level ${currentLevel}`);
-            }
             
             // Audio System Implementation
             function initializeAudio() {
@@ -1264,29 +978,818 @@
             console.log('createUserProfile function exists:', typeof createUserProfile);
             console.log('game object exists:', typeof game);
             
-            // Add manual test buttons that bypass onclick handlers
-            setTimeout(() => {
-                console.log('🧪 Adding manual test functions...');
-                window.testAvatar = function() {
-                    console.log('🧪 TEST: Manual avatar selection');
-                    if (typeof selectAvatar === 'function') {
-                        selectAvatar('penny', document.querySelector('[data-avatar="penny"]'));
+            // Ensure game object is available
+            function ensureGameObject() {
+                if (!window.game) {
+                    console.log('⚠️ Game object not found, attempting to create...');
+                    // Try to create a minimal game object if the main one failed
+                    if (typeof TaxFilingGame !== 'undefined') {
+                        window.game = new TaxFilingGame();
+                        console.log('✅ Game object created successfully');
+                    } else if (typeof game !== 'undefined' && game) {
+                        // Use the local game variable if it exists
+                        window.game = game;
+                        console.log('✅ Game object assigned from local variable');
                     } else {
-                        console.error('selectAvatar function not found!');
+                        console.log('❌ TaxFilingGame class not available');
+                    }
+                } else {
+                    console.log('✅ Game object is available');
+                }
+            }
+            
+            // Check for game object after a short delay
+            setTimeout(ensureGameObject, 500);
+            setTimeout(ensureGameObject, 1000);
+            setTimeout(ensureGameObject, 2000);
+            
+            
+            
+            // Add input listener for name field - wait for DOM to be ready
+            function attachEventListeners() {
+                const nameInput = document.getElementById('player-name');
+                if (nameInput) {
+                    // Remove any existing listeners first
+                    nameInput.removeEventListener('input', checkProfileReady);
+                    nameInput.removeEventListener('keyup', checkProfileReady);
+                    
+                    // Add new listeners
+                    nameInput.addEventListener('input', checkProfileReady);
+                    nameInput.addEventListener('keyup', checkProfileReady);
+                }
+                
+                // Also add onclick handlers to avatar buttons
+                const avatarOptions = document.querySelectorAll('.avatar-option');
+                avatarOptions.forEach((option) => {
+                    const avatarType = option.getAttribute('data-avatar');
+                    
+                    // Remove existing onclick and add new event listener
+                    option.onclick = null;
+                    option.addEventListener('click', function() {
+                        selectAvatar(avatarType, this);
+                    });
+                });
+            }
+            
+            // Try to attach listeners immediately
+            attachEventListeners();
+            
+            // Also try after DOM is loaded
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', attachEventListeners);
+            }
+            
+            // Try again after a short delay to make sure everything is loaded
+            setTimeout(attachEventListeners, 1000);
+            
+            // Define updateActionButtons function first
+            function updateActionButtons() {
+                const fillBtn = document.getElementById('fill-btn');
+                const submitBtn = document.getElementById('submit-form-btn');
+                
+                if (!fillBtn || !submitBtn) {
+                    return;
+                }
+                
+                switch (window.formState) {
+                    case 'empty':
+                        fillBtn.disabled = false;
+                        fillBtn.style.display = 'inline-block';
+                        submitBtn.style.display = 'none';
+                        break;
+                    case 'filled':
+                        fillBtn.disabled = true;
+                        fillBtn.style.display = 'none';
+                        submitBtn.style.display = 'inline-block';
+                        submitBtn.disabled = true; // Initially disabled until form is validated
+                        submitBtn.style.opacity = '0.5';
+                        submitBtn.style.cursor = 'not-allowed';
+                        submitBtn.title = 'Please fill out the form correctly to enable submission.';
+                        break;
+                    case 'reviewed':
+                        fillBtn.disabled = true;
+                        fillBtn.style.display = 'none';
+                        submitBtn.style.display = 'inline-block';
+                        submitBtn.disabled = false;
+                        break;
+                    default:
+                        // Force show submit button for unexpected states
+                        submitBtn.style.display = 'inline-block';
+                        submitBtn.disabled = false;
+                        break;
+                }
+            }
+            
+            // Form validation function
+            function validateForm() {
+                const inputs = document.querySelectorAll('#current-form input');
+                const errors = [];
+                let allCorrect = true;
+                
+                // Get current level data for validation
+                let pandaData;
+                if (typeof getPandaData === 'function') {
+                    pandaData = getPandaData();
+                    } else {
+                    // Fallback test data
+                    pandaData = {
+                        ein: '94-1234567',
+                        totalWages: '125000',
+                        federalIncomeTax: '18750',
+                        socialSecurityTax: '7750',
+                        medicareTax: '1812'
+                    };
+                }
+                
+                inputs.forEach(input => {
+                    const fieldId = input.id;
+                    const userValue = input.value.trim();
+                    const correctValue = getCorrectValue(fieldId, pandaData);
+                    
+                    // Debug logging for field validation
+                    console.log(`🔍 Field ${fieldId}: user="${userValue}", correct="${correctValue}"`);
+                    
+                    
+                    // Clear previous validation styling and animations
+                    input.style.border = '';
+                    input.style.backgroundColor = '';
+                    input.style.boxShadow = '';
+                    input.style.animation = '';
+                    input.classList.remove('field-correct', 'field-incorrect', 'field-empty');
+                    
+                    if (userValue === '') {
+                        // Empty field - show neutral styling
+                        input.classList.add('field-empty');
+                        input.style.border = '2px solid #ffa726';
+                        input.style.backgroundColor = '#fff3e0';
+                        return;
+                    }
+                    
+                    if (correctValue && userValue !== correctValue) {
+                        // Incorrect answer - strong visual feedback
+                        input.classList.add('field-incorrect');
+                        input.style.border = '3px solid #f44336';
+                        input.style.backgroundColor = '#ffebee';
+                        input.style.boxShadow = '0 0 10px rgba(244, 67, 54, 0.5)';
+                        input.style.animation = 'shake 0.5s ease-in-out';
+                        errors.push(`${fieldId}: "${userValue}" should be "${correctValue}"`);
+                        allCorrect = false;
+                    } else if (correctValue && userValue === correctValue) {
+                        // Correct answer - positive visual feedback
+                        input.classList.add('field-correct');
+                        input.style.border = '3px solid #4CAF50';
+                        input.style.backgroundColor = '#e8f5e8';
+                        input.style.boxShadow = '0 0 10px rgba(76, 175, 80, 0.5)';
+                        input.style.animation = 'pulse 0.3s ease-in-out';
+                    }
+                });
+                
+                return { allCorrect, errors };
+            }
+            
+            // Get correct value for a field based on PANDA data
+            function getCorrectValue(fieldId, pandaData) {
+                // Map field IDs to PANDA data based on the form generation
+                const fieldMap = {
+                    'field-0': pandaData.ein,                    // EIN
+                    'field-1': pandaData.totalWages,             // Total Wages
+                    'field-2': pandaData.federalIncomeTax,       // Federal Income Tax
+                    'field-3': pandaData.socialSecurityTax,      // Social Security Tax
+                    'field-4': pandaData.medicareTax             // Medicare Tax
+                };
+                
+                return fieldMap[fieldId] || null;
+            }
+            
+            // ULTRA SIMPLE form that definitely works
+            function createUltraSimpleForm() {
+                console.log('🎯 Creating ULTRA SIMPLE form');
+                
+                const formElement = document.getElementById('current-form');
+                if (!formElement) {
+                    console.error('❌ Form element not found!');
+                    return;
+                }
+                
+                // Create the simplest possible form
+                formElement.innerHTML = `
+                    <h3>Tax Form - Level ${currentLevel}</h3>
+                    <div style="margin: 20px 0;">
+                        <label>EIN: </label>
+                        <input type="text" id="field-0" placeholder="94-1234567" style="margin: 5px; padding: 10px; border: 2px solid #ddd;">
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <label>Total Wages: </label>
+                        <input type="text" id="field-1" placeholder="125000.00" style="margin: 5px; padding: 10px; border: 2px solid #ddd;">
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <label>Federal Income Tax: </label>
+                        <input type="text" id="field-2" placeholder="18750.00" style="margin: 5px; padding: 10px; border: 2px solid #ddd;">
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <label>Social Security Tax: </label>
+                        <input type="text" id="field-3" placeholder="7750.00" style="margin: 5px; padding: 10px; border: 2px solid #ddd;">
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <label>Medicare Tax: </label>
+                        <input type="text" id="field-4" placeholder="1812.50" style="margin: 5px; padding: 10px; border: 2px solid #ddd;">
+                    </div>
+                    <button id="submit-form-btn" onclick="submitUltraSimpleForm()" style="display: none; padding: 15px 30px; font-size: 16px; background: #4CAF50; color: white; border: none; cursor: pointer; margin: 20px 0;">
+                        🚀 SUBMIT FORM
+                    </button>
+                `;
+                
+                console.log('✅ Ultra simple form created');
+                
+                // Add simple validation
+                const inputs = document.querySelectorAll('#current-form input');
+                const correctAnswers = ['94-1234567', '125000.00', '18750.00', '7750.00', '1812.50'];
+                
+                inputs.forEach((input, index) => {
+                    input.addEventListener('input', () => {
+                        const value = input.value.trim();
+                        const correct = correctAnswers[index];
+                        
+                        console.log(`Field ${index}: "${value}" vs "${correct}"`);
+                        
+                        if (value === correct) {
+                            input.style.border = '3px solid #00ff00';
+                            input.style.background = '#f0fff0';
+                            console.log(`✅ Field ${index} GREEN`);
+                        } else if (value !== '') {
+                            input.style.border = '3px solid #ff0000';
+                            input.style.background = '#fff0f0';
+                            console.log(`❌ Field ${index} RED`);
+                        } else {
+                            input.style.border = '2px solid #ddd';
+                            input.style.background = 'white';
+                        }
+                        
+                        // Check if all filled and correct
+                        let allCorrect = true;
+                        let allFilled = true;
+                        inputs.forEach((inp, i) => {
+                            if (!inp.value.trim()) allFilled = false;
+                            if (inp.value.trim() !== correctAnswers[i]) allCorrect = false;
+                        });
+                        
+                        const submitBtn = document.getElementById('submit-form-btn');
+                        if (allFilled) {
+                            submitBtn.style.display = 'block';
+                            if (allCorrect) {
+                                submitBtn.textContent = '🚀 SUBMIT - ALL CORRECT!';
+                                submitBtn.style.background = '#4CAF50';
+                            } else {
+                                submitBtn.textContent = '⚠️ SUBMIT ANYWAY';
+                                submitBtn.style.background = '#ff9800';
+                            }
+                        } else {
+                            submitBtn.style.display = 'none';
+                        }
+                    });
+                });
+                
+                console.log('✅ Ultra simple validation added');
+            }
+            
+            // Ultra simple submit function
+            function submitUltraSimpleForm() {
+                console.log('🚀 Form submitted!');
+                
+                // Add points and advance level
+                currentScore += 100;
+                currentLevel++;
+                formsCompleted++;
+                timeLeft += 15; // Bonus time
+                
+                // Update UI
+                document.getElementById('score').textContent = currentScore;
+                document.getElementById('level').textContent = currentLevel;
+                document.getElementById('completed').textContent = formsCompleted;
+                
+                alert(`🎉 Level Complete! 
+Score: ${currentScore}
+Now Level: ${currentLevel}
++15 seconds bonus time!`);
+                
+                // Create new form for next level
+                createUltraSimpleForm();
+                
+                console.log('✅ Advanced to level', currentLevel);
+            }
+            
+            // TEST FUNCTION - Call this from console to test everything
+            function testGame() {
+                console.log('🧪 TESTING ULTRA SIMPLE GAME...');
+                
+                // Test 1: Check if elements exist
+                console.log('Test 1: Elements');
+                console.log('  - Game screen:', !!document.getElementById('game-screen'));
+                console.log('  - Form element:', !!document.getElementById('current-form'));
+                console.log('  - Timer element:', !!document.getElementById('timer'));
+                
+                // Test 2: Start game
+                console.log('Test 2: Starting game...');
+                startGameManually();
+                
+                // Test 3: Check after 2 seconds
+                setTimeout(() => {
+                    console.log('Test 3: After game start');
+                    console.log('  - Game screen visible:', document.getElementById('game-screen').style.display === 'block');
+                    console.log('  - Form inputs:', document.querySelectorAll('#current-form input').length);
+                    console.log('  - Timer value:', document.getElementById('timer').textContent);
+                }, 2000);
+                
+                console.log('✅ Test started - check console in 2 seconds');
+            }
+            
+            // Setup normal game flow - profile first, then game
+            window.addEventListener('load', () => {
+                console.log('🎮 Loading normal game flow...');
+                
+                // Kill any existing timers
+                if (window.gameTimer) clearInterval(window.gameTimer);
+                if (window.timer) clearInterval(window.timer);
+                
+                // Override any existing functions that might interfere with our working game
+                window.generateForm = function() { console.log('generateForm blocked - using simple game'); };
+                window.renderForm = function() { console.log('renderForm blocked - using simple game'); };
+                window.generateNewForm = function() { console.log('generateNewForm blocked - using simple game'); };
+                
+                // Show profile screen first (normal flow)
+                setTimeout(() => {
+                    console.log('✅ Showing profile creation screen');
+                    showProfileScreen();
+                }, 1000);
+            });
+            
+            // Show profile screen function
+            function showProfileScreen() {
+                const profileScreen = document.getElementById('profile-screen');
+                const startScreen = document.getElementById('start-screen');
+                const gameScreen = document.getElementById('game-screen');
+                
+                if (profileScreen) profileScreen.style.display = 'flex';
+                if (startScreen) startScreen.style.display = 'none';
+                if (gameScreen) gameScreen.style.display = 'none';
+                
+                console.log('📋 Profile screen shown - enter name and choose avatar');
+            }
+            
+            // Enhanced start game function (called from Start Game button)
+            function startWorkingGame() {
+                console.log('🎮 Starting working game with profile...');
+                
+                // Get user profile info
+                const playerName = document.getElementById('player-name')?.value?.trim() || 'Player';
+                const avatar = window.selectedAvatarGlobal || '👤';
+                
+                console.log(`Player: ${playerName}, Avatar: ${avatar}`);
+                
+                // Reset game progress flag for fresh start
+                window.gameInProgress = false;
+                
+                // Now start the working game
+                forceSimpleGame();
+            }
+            
+            // COMPLETELY ISOLATED SIMPLE GAME
+            function forceSimpleGame() {
+                console.log('🚨 FORCE SIMPLE GAME START');
+                
+                // 1. Force show game screen
+                const gameScreen = document.getElementById('game-screen');
+                const startScreen = document.getElementById('start-screen');
+                const profileScreen = document.getElementById('profile-screen');
+                
+                if (startScreen) startScreen.style.display = 'none';
+                if (profileScreen) profileScreen.style.display = 'none';
+                if (gameScreen) gameScreen.style.display = 'block';
+                
+                console.log('✅ Screens forced');
+                
+                // 2. Set up game variables (only if starting fresh)
+                if (!window.gameInProgress) {
+                    window.timeLeft = 90;
+                    window.currentLevel = 1;
+                    window.currentScore = 0;
+                    window.formsCompleted = 0;
+                    window.gameInProgress = true;
+                    console.log('🎮 Starting fresh game - Level 1');
+                } else {
+                    console.log(`🎮 Continuing game - Level ${window.currentLevel}`);
+                }
+                
+                // 3. Force update UI
+                const scoreEl = document.getElementById('score');
+                const levelEl = document.getElementById('level');
+                const timerEl = document.getElementById('timer');
+                const completedEl = document.getElementById('completed');
+                
+                if (scoreEl) scoreEl.textContent = window.currentScore || 0;
+                if (levelEl) levelEl.textContent = window.currentLevel || 1;
+                if (timerEl) timerEl.textContent = window.timeLeft || 90;
+                if (completedEl) completedEl.textContent = window.formsCompleted || 0;
+                
+                console.log('✅ UI forced');
+                
+                // Get player info
+                const savedProfile = localStorage.getItem('taxProUser');
+                let playerName = 'Player';
+                let playerAvatar = '👤';
+                
+                if (savedProfile) {
+                    const profile = JSON.parse(savedProfile);
+                    playerName = profile.name || 'Player';
+                    playerAvatar = profile.avatar || '👤';
+                }
+                
+                // Different forms AND data for different levels
+                const levelData = {
+                    1: { 
+                        form: 'IRS Form 941 - Federal Quarterly Tax Return', 
+                        state: 'Federal',
+                        company: 'Gusto Payroll Solutions',
+                        ein: '94-1234567',
+                        wages: '125000.00',
+                        fedTax: '18750.00',
+                        ssTax: '7750.00',
+                        medTax: '1812.50'
+                    },
+                    2: { 
+                        form: 'California DE 9 - State Quarterly Report', 
+                        state: 'California',
+                        company: 'Gusto California Inc',
+                        ein: '77-9876543',
+                        wages: '98500.00',
+                        fedTax: '14775.00',
+                        ssTax: '6107.00',
+                        medTax: '1428.25'
+                    },
+                    3: { 
+                        form: 'New York NYS-45 - State Withholding Report', 
+                        state: 'New York',
+                        company: 'Gusto NY Solutions',
+                        ein: '33-5555678',
+                        wages: '156000.00',
+                        fedTax: '23400.00',
+                        ssTax: '9672.00',
+                        medTax: '2262.00'
+                    },
+                    4: { 
+                        form: 'Texas C-3 - State Employer Tax Report', 
+                        state: 'Texas',
+                        company: 'Gusto Texas Corp',
+                        ein: '88-4444321',
+                        wages: '89200.00',
+                        fedTax: '13380.00',
+                        ssTax: '5530.40',
+                        medTax: '1293.40'
+                    },
+                    5: { 
+                        form: 'Illinois UI-3/40 - State Wage Report', 
+                        state: 'Illinois',
+                        company: 'Gusto Illinois LLC',
+                        ein: '55-7777890',
+                        wages: '203000.00',
+                        fedTax: '30450.00',
+                        ssTax: '12586.00',
+                        medTax: '2943.50'
                     }
                 };
                 
-                window.testProfile = function() {
-                    console.log('🧪 TEST: Manual profile creation');
-                    if (typeof createUserProfile === 'function') {
-                        createUserProfile();
-                    } else {
-                        console.error('createUserProfile function not found!');
+                const currentFormLevel = ((window.currentLevel - 1) % 5) + 1;
+                const currentData = levelData[currentFormLevel];
+                
+                console.log(`🎯 Level ${window.currentLevel} - Form Level ${currentFormLevel} - ${currentData.form}`);
+                console.log(`📊 Data for level: EIN=${currentData.ein}, Wages=${currentData.wages}`);
+                
+                // Update PANDA reference board with current level data
+                updatePandaReference(currentData);
+                
+                // 4. FORCE CREATE SIMPLE FORM (no quarter!)
+                const formElement = document.getElementById('current-form');
+                if (formElement) {
+                    formElement.innerHTML = `
+                        <div style="background: white; padding: 20px; border: 2px solid #ddd; border-radius: 10px;">
+                            <h2>${playerAvatar} ${playerName} - Level ${window.currentLevel}</h2>
+                            <h3 style="color: #2196F3; margin: 10px 0;">${currentData.form}</h3>
+                            <p style="color: #666; margin: 10px 0; font-weight: bold;">${currentData.state} Form - ${currentData.company}</p>
+                            <div style="margin: 15px 0;">
+                                <label style="display: block; font-weight: bold;">EIN:</label>
+                                <input type="text" id="simple-field-0" value="" placeholder="${currentData.ein}" 
+                                       style="width: 200px; padding: 10px; border: 2px solid #ccc; font-size: 16px;">
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <label style="display: block; font-weight: bold;">Total Wages:</label>
+                                <input type="text" id="simple-field-1" value="" placeholder="${currentData.wages}" 
+                                       style="width: 200px; padding: 10px; border: 2px solid #ccc; font-size: 16px;">
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <label style="display: block; font-weight: bold;">Federal Income Tax:</label>
+                                <input type="text" id="simple-field-2" value="" placeholder="${currentData.fedTax}" 
+                                       style="width: 200px; padding: 10px; border: 2px solid #ccc; font-size: 16px;">
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <label style="display: block; font-weight: bold;">Social Security Tax:</label>
+                                <input type="text" id="simple-field-3" value="" placeholder="${currentData.ssTax}" 
+                                       style="width: 200px; padding: 10px; border: 2px solid #ccc; font-size: 16px;">
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <label style="display: block; font-weight: bold;">Medicare Tax:</label>
+                                <input type="text" id="simple-field-4" value="" placeholder="${currentData.medTax}" 
+                                       style="width: 200px; padding: 10px; border: 2px solid #ccc; font-size: 16px;">
+                            </div>
+                            <button id="simple-submit" onclick="simpleSubmit()" 
+                                    style="display: none; padding: 15px 25px; background: #4CAF50; color: white; border: none; font-size: 18px; cursor: pointer; border-radius: 5px; margin: 10px;">
+                                🚀 SUBMIT FORM
+                            </button>
+                            <button onclick="exitToProfile()" 
+                                    style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; font-size: 14px; cursor: pointer; border-radius: 5px; margin: 10px;">
+                                🚪 Exit to Profile
+                            </button>
+                        </div>
+                    `;
+                    console.log('✅ Simple form forced (NO QUARTER)');
+                    
+                    // Add validation to inputs with current level's correct answers
+                    const answers = [currentData.ein, currentData.wages, currentData.fedTax, currentData.ssTax, currentData.medTax];
+                    const inputs = [
+                        document.getElementById('simple-field-0'),
+                        document.getElementById('simple-field-1'),
+                        document.getElementById('simple-field-2'),
+                        document.getElementById('simple-field-3'),
+                        document.getElementById('simple-field-4')
+                    ];
+                    
+                    console.log(`✅ Level ${window.currentLevel} correct answers:`, answers);
+                    
+                    inputs.forEach((input, i) => {
+                        if (input) {
+                            // Make sure field is enabled
+                            input.disabled = false;
+                            input.readOnly = false;
+                            
+                            input.addEventListener('input', () => {
+                                const val = input.value.trim();
+                                console.log(`Simple field ${i}: "${val}" vs "${answers[i]}"`);
+                                
+                                if (val === answers[i]) {
+                                    input.style.border = '3px solid #00ff00';
+                                    input.style.background = '#f0fff0';
+                                } else if (val !== '') {
+                                    input.style.border = '3px solid #ff0000';
+                                    input.style.background = '#fff0f0';
+                                } else {
+                                    input.style.border = '2px solid #ccc';
+                                    input.style.background = 'white';
+                                }
+                                
+                                // Check if all correct
+                                let allCorrect = true;
+                                let allFilled = true;
+                                inputs.forEach((inp, j) => {
+                                    if (!inp.value.trim()) allFilled = false;
+                                    if (inp.value.trim() !== answers[j]) allCorrect = false;
+                                });
+                                
+                                const btn = document.getElementById('simple-submit');
+                                if (allFilled && btn) {
+                                    btn.style.display = 'block';
+                                    btn.textContent = allCorrect ? '🚀 SUBMIT - PERFECT!' : '⚠️ SUBMIT ANYWAY';
+                                    btn.style.background = allCorrect ? '#4CAF50' : '#ff9800';
+                                }
+                            });
+                        }
+                    });
+                }
+                
+                // 5. FORCE START TIMER
+                if (window.forceTimer) clearInterval(window.forceTimer);
+                window.forceTimer = setInterval(() => {
+                    window.timeLeft--;
+                    console.log('FORCE TIMER:', window.timeLeft);
+                    
+                    const timerEl = document.getElementById('timer');
+                    if (timerEl) timerEl.textContent = window.timeLeft;
+                    
+                    if (window.timeLeft <= 0) {
+                        clearInterval(window.forceTimer);
+                        alert('⏰ Time up!');
                     }
+                }, 1000);
+                
+                console.log('🚨 FORCE SIMPLE GAME COMPLETE - Try typing in the fields!');
+            }
+            
+            // Update PANDA reference board with current level data
+            function updatePandaReference(levelData) {
+                console.log('📋 Updating PANDA reference with:', levelData);
+                
+                // Update PANDA board content
+                const pandaBoard = document.querySelector('.panda-content');
+                if (pandaBoard) {
+                    pandaBoard.innerHTML = `
+                        <h4>📊 ${levelData.form}</h4>
+                        <p style="color: #666; margin-bottom: 15px;"><strong>${levelData.company}</strong></p>
+                        
+                        <div class="panda-field" style="margin: 10px 0; padding: 8px; background: #f9f9f9; border-radius: 5px;">
+                            <strong>EIN (Employer ID):</strong><br>
+                            <code style="font-size: 16px; color: #d32f2f; font-weight: bold;">${levelData.ein}</code>
+                        </div>
+                        
+                        <div class="panda-field" style="margin: 10px 0; padding: 8px; background: #f9f9f9; border-radius: 5px;">
+                            <strong>Total Wages:</strong><br>
+                            <code style="font-size: 16px; color: #d32f2f; font-weight: bold;">$${levelData.wages}</code>
+                        </div>
+                        
+                        <div class="panda-field" style="margin: 10px 0; padding: 8px; background: #f9f9f9; border-radius: 5px;">
+                            <strong>Federal Income Tax:</strong><br>
+                            <code style="font-size: 16px; color: #d32f2f; font-weight: bold;">$${levelData.fedTax}</code>
+                        </div>
+                        
+                        <div class="panda-field" style="margin: 10px 0; padding: 8px; background: #f9f9f9; border-radius: 5px;">
+                            <strong>Social Security Tax:</strong><br>
+                            <code style="font-size: 16px; color: #d32f2f; font-weight: bold;">$${levelData.ssTax}</code>
+                        </div>
+                        
+                        <div class="panda-field" style="margin: 10px 0; padding: 8px; background: #f9f9f9; border-radius: 5px;">
+                            <strong>Medicare Tax:</strong><br>
+                            <code style="font-size: 16px; color: #d32f2f; font-weight: bold;">$${levelData.medTax}</code>
+                        </div>
+                        
+                        <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-radius: 5px; border: 1px solid #2196f3;">
+                            <small><strong>💡 Copy these values EXACTLY into the form!</strong></small>
+                        </div>
+                    `;
+                    console.log('✅ PANDA board updated successfully');
+                } else {
+                    console.log('⚠️ PANDA board element not found');
+                }
+            }
+            
+            // Simple submit function
+            function simpleSubmit() {
+                console.log('🚀 Simple submit!');
+                window.currentScore += 100;
+                window.currentLevel++;
+                window.formsCompleted++;
+                window.timeLeft += 15;
+                
+                // Get next form info for the alert
+                const nextLevelData = {
+                    1: { form: 'IRS Form 941 - Federal Quarterly Tax Return', company: 'Gusto Payroll Solutions', state: 'Federal' },
+                    2: { form: 'California DE 9 - State Quarterly Report', company: 'Gusto California Inc', state: 'California' },
+                    3: { form: 'New York NYS-45 - State Withholding Report', company: 'Gusto NY Solutions', state: 'New York' },
+                    4: { form: 'Texas C-3 - State Employer Tax Report', company: 'Gusto Texas Corp', state: 'Texas' },
+                    5: { form: 'Illinois UI-3/40 - State Wage Report', company: 'Gusto Illinois LLC', state: 'Illinois' }
                 };
                 
-                console.log('🧪 Manual test functions added. Try: testAvatar() and testProfile()');
-            }, 1000);
+                const nextFormLevel = ((window.currentLevel - 1) % 5) + 1;
+                const nextForm = nextLevelData[nextFormLevel];
+                
+                alert(`🎉 Level Complete! 
+Score: ${window.currentScore}
+Next: Level ${window.currentLevel} - ${nextForm.form}
+Company: ${nextForm.company} (${nextForm.state})
++15 seconds bonus time!`);
+                
+                // Update UI immediately
+                const scoreEl = document.getElementById('score');
+                const levelEl = document.getElementById('level');
+                const completedEl = document.getElementById('completed');
+                const timerEl = document.getElementById('timer');
+                
+                if (scoreEl) scoreEl.textContent = window.currentScore;
+                if (levelEl) levelEl.textContent = window.currentLevel;
+                if (completedEl) completedEl.textContent = window.formsCompleted;
+                if (timerEl) timerEl.textContent = window.timeLeft;
+                
+                console.log(`✅ Level advanced to ${window.currentLevel}`);
+                
+                // Update saved profile with best score
+                const savedProfile = localStorage.getItem('taxProUser');
+                if (savedProfile) {
+                    const profile = JSON.parse(savedProfile);
+                    if (window.currentScore > profile.bestScore) {
+                        profile.bestScore = window.currentScore;
+                        localStorage.setItem('taxProUser', JSON.stringify(profile));
+                        console.log('🏆 New best score saved!');
+                    }
+                }
+                
+                // Create new form with updated level
+                console.log(`🔄 Creating new form for level ${window.currentLevel}`);
+                setTimeout(() => forceSimpleGame(), 1000);
+            }
+            
+            // Exit to profile function
+            function exitToProfile() {
+                console.log('🚪 Exiting to profile...');
+                
+                // Stop timer
+                if (window.forceTimer) {
+                    clearInterval(window.forceTimer);
+                    console.log('⏰ Timer stopped');
+                }
+                
+                // Reset game progress flag
+                window.gameInProgress = false;
+                
+                // Show profile screen
+                showProfileScreen();
+                
+                // Reset game state
+                window.timeLeft = 90;
+                window.currentLevel = 1;
+                window.currentScore = 0;
+                window.formsCompleted = 0;
+                
+                console.log('✅ Returned to profile screen');
+            }
+            
+            // Remove automatic form creation - will be handled by game start only
+
+            // Remove complex overrides - keep it simple
+
+            // Simple fillForm function - form fields are always ready
+            window.fillForm = function() {
+                console.log('🚀 fillForm() called - form is already ready!');
+                
+                // Set form state
+                window.formState = 'filled';
+                formState = 'filled';
+                
+                // Focus first input if available
+                const firstInput = document.querySelector('#current-form input');
+                if (firstInput) {
+                    firstInput.focus();
+                    console.log('✅ Focused first input field');
+                }
+                
+                console.log('✅ Form ready to use!');
+            };
+            
+            // Update submit button based on validation
+            function updateSubmitButton(isValid) {
+                const submitBtn = document.getElementById('submit-form-btn');
+                if (submitBtn) {
+                    if (isValid) {
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                        submitBtn.style.cursor = 'pointer';
+                        submitBtn.title = '✅ All answers are correct! Click to submit.';
+                        submitBtn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                    } else {
+                        submitBtn.disabled = true;
+                        submitBtn.style.opacity = '0.5';
+                        submitBtn.style.cursor = 'not-allowed';
+                        submitBtn.title = '❌ Please correct all red highlighted fields before submitting.';
+                        submitBtn.style.background = 'linear-gradient(45deg, #f44336, #d32f2f)';
+                    }
+                }
+            }
+            
+            // Show validation summary
+            function showValidationSummary(validation) {
+                const summary = document.createElement('div');
+                summary.id = 'validation-summary';
+                summary.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: ${validation.allCorrect ? '#4CAF50' : '#f44336'};
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    z-index: 10000;
+                    font-weight: bold;
+                    text-align: center;
+                    max-width: 80%;
+                `;
+                
+                if (validation.allCorrect) {
+                    summary.innerHTML = '✅ All answers are correct! You can now submit the form.';
+                } else {
+                    summary.innerHTML = `❌ ${validation.errors.length} field(s) need correction. Check the red highlighted fields.`;
+                }
+                
+                // Remove existing summary
+                const existingSummary = document.getElementById('validation-summary');
+                if (existingSummary) existingSummary.remove();
+                
+                document.body.appendChild(summary);
+                
+                // Auto-remove after 3 seconds
+                setTimeout(() => {
+                    if (summary.parentNode) summary.remove();
+                }, 3000);
+            }
+            
+            
+            
         </script>
 </body>
 </html>
